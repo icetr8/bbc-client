@@ -4,4 +4,22 @@
   <artifactId>coinsbot</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>coinsbot</name>
+  
+  <dependencies>
+  	<dependency>
+        <groupId>com.sparkjava</groupId>
+        <artifactId>spark-core</artifactId>
+        <version>2.5</version>
+    </dependency>
+    <dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-api</artifactId>
+       <version>1.7.5</version>
+   </dependency>
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-simple</artifactId>
+    <version>1.7.21</version>
+</dependency>
+	</dependencies>
 </project>
