@@ -41,3 +41,20 @@ End with an example of getting some data out of the system or using it for a lit
 
 ### Notes
 
+- [What's the difference between response.body() and object returned by the
+  callback?](https://stackoverflow.com/questions/35256701/whats-the-difference-between-response-body-and-object-returned-by-the-callbac)
+
+```
+An actual difference however is that response.body() accepts only String, while in the callback you
+can return any object that can be serialized to String and most importantly streams.
+
+response.body() should be mostly used in exception handlers and after filters, and the callback
+return in normal routes.
+```
+
+- [Java JSON deserializer that decodes a string into dictionary of lists or lists of dictionaries of primitive types](https://stackoverflow.com/questions/4403249/is-there-a-java-json-deserializer-that-decodes-a-string-into-dictionary-of-lists)
+
+```
+ObjectMapper mapper = new ObjectMapper();
+Map<String,Object> map = mapper.readValue(json, Map.class);
+```
