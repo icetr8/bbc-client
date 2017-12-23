@@ -14,7 +14,7 @@ import static spark.Spark.delete;
 import static spark.Spark.path;
 
 public class Main {
-
+	public static final String PAGE_ACCESS_TOKEN="<PAGE_ACCESS_TOKEN>";
     public static void main(String[] args) {
     	
         port(getHerokuAssignedPort());
