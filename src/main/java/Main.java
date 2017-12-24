@@ -22,6 +22,7 @@ import static spark.Spark.path;
 
 public class Main {
 	public static final String PAGE_ACCESS_TOKEN="<PAGE_ACCESS_TOKEN>";
+	private static final String something = null;
     public static void main(String[] args) {
     	
         port(getHerokuAssignedPort());
@@ -53,8 +54,16 @@ public class Main {
             	Map<String,Object> map = mapper.readValue(body, Map.class);
             	String page = (String) map.get("object");
         		if (page.equalsIgnoreCase("page")) {
-        			String message = getMessage(request.body());
-        			System.out.println(message);
+        			JsonObject messagingObject = getMessageObject(request.body());
+        			String psid = getPSID(messagingObject);
+        			if (messagingObject.get("message_postback") != null) {
+        				
+        			}
+        			else if (messagingObject.get("message") != null) {
+        				System.out.println(messagingObject.toString());
+        				
+        			}
+        			
         		}
         		else
         			halt(404);
@@ -63,18 +72,44 @@ public class Main {
             });
         });
     }
-    static String getMessage(String body) {
+    private static JsonObject getMessageObject(String body) {
     	JsonElement jelement = new JsonParser().parse(body);
 		JsonObject entryobject = jelement.getAsJsonObject();
 	    JsonArray entryarray = entryobject.getAsJsonArray("entry");
 	    JsonObject messagingobject = entryarray.get(0).getAsJsonObject();
 	    JsonArray messagingarray = messagingobject.getAsJsonArray("messaging");
-	    JsonObject messageobject = messagingarray.get(0).getAsJsonObject();
-	    JsonObject message = messageobject.getAsJsonObject("message");
-	    String result = message.get("text").getAsString();
-		return result;
-    	
+	    JsonObject messageObject = messagingarray.get(0).getAsJsonObject();
+	    
+		return messageObject;
     }
+    static String getMessage(JsonObject messagingobject) {
+    	JsonObject message = messagingobject.getAsJsonObject("message");
+    	String text = message.get("text").getAsString();
+    	return text;
+    }
+    static String getPSID(JsonObject messagingobject) {
+    	JsonObject message = messagingobject.getAsJsonObject("sender");
+    	String psid = message.get("id").getAsString();
+    	return psid;
+    }
+    // Handles messages events
+	static String handleMessage(String sender_psid, JsonObject received_message) {
+		return something;
+
+		}
+
+		// Handles messaging_postbacks events
+	static String handlePostback(String sender_psid, String received_postback) {
+		return something;
+
+		}
+
+		// Sends response messages via the Send API
+	static String callSendAPI(String sender_psid, String response) {
+		return something;
+		  
+		}
+    	
     static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (processBuilder.environment().get("PORT") != null) {
