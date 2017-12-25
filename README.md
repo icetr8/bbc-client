@@ -37,7 +37,8 @@ until finished
 
 End with an example of getting some data out of the system or using it for a little demo
 ### To Do's
-
+	
+- Make folder Structure organized(flask-like boilerplate)
 
 ### Notes
 - Incoming webhook event sample post
@@ -85,4 +86,14 @@ return in normal routes.
 ```
 ObjectMapper mapper = new ObjectMapper();
 Map<String,Object> map = mapper.readValue(json, Map.class);
+```
+
+- [Create GSON object that can convert to JSON](https://stackoverflow.com/questions/4683856/creating-gson-object)
+
+```
+JsonObject innerObject = new JsonObject();
+innerObject.addProperty("name", "john");
+
+JsonObject jsonObject = new JsonObject();
+jsonObject.add("publisher", innerObject);
 ```

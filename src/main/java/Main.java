@@ -3,12 +3,25 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.halt;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
 import javax.servlet.http.Part;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
@@ -23,7 +36,7 @@ import static spark.Spark.path;
 public class Main {
 	public static final String PAGE_ACCESS_TOKEN="<PAGE_ACCESS_TOKEN>";
 	private static final String something = null;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
     	
         port(getHerokuAssignedPort());
         path("/webhook", () -> {
@@ -55,13 +68,14 @@ public class Main {
             	String page = (String) map.get("object");
         		if (page.equalsIgnoreCase("page")) {
         			JsonObject messagingObject = getMessageObject(request.body());
-        			String psid = getPSID(messagingObject);
+        			String sender_psid = getPSID(messagingObject);
+        			System.out.println(sender_psid);
         			if (messagingObject.get("message_postback") != null) {
         				
         			}
         			else if (messagingObject.get("message") != null) {
-        				System.out.println(messagingObject.toString());
-        				
+        				JsonObject messageObject = messagingObject.getAsJsonObject("message");
+        				handleMessage(sender_psid, messageObject);
         			}
         			
         		}
@@ -82,19 +96,24 @@ public class Main {
 	    
 		return messageObject;
     }
-    static String getMessage(JsonObject messagingobject) {
-    	JsonObject message = messagingobject.getAsJsonObject("message");
-    	String text = message.get("text").getAsString();
-    	return text;
-    }
-    static String getPSID(JsonObject messagingobject) {
-    	JsonObject message = messagingobject.getAsJsonObject("sender");
-    	String psid = message.get("id").getAsString();
-    	return psid;
-    }
     // Handles messages events
-	static String handleMessage(String sender_psid, JsonObject received_message) {
-		return something;
+	static void handleMessage(String sender_psid, JsonObject received_message) throws Exception {
+		JsonObject reply = new JsonObject();
+
+
+		if (received_message.get("text") != null) {
+			System.out.println(received_message.get("text"));
+			reply.addProperty("text", "You sent the message: "+received_message.get("text")+". Now send me an image!");
+		}
+		else if (received_message.get("attachments")!= null) {
+			  
+		    // Gets the URL of the message attachment
+		    String attachment_url = "";
+		  
+		  } 
+		
+			callSendAPI(sender_psid, reply);
+		
 
 		}
 
@@ -105,10 +124,25 @@ public class Main {
 		}
 
 		// Sends response messages via the Send API
-	static String callSendAPI(String sender_psid, String response) {
-		return something;
-		  
-		}
+	static void callSendAPI(String sender_psid, JsonObject reply) throws Exception {
+		JsonObject request_body = new JsonObject();
+		JsonObject id = new JsonObject();
+		id.addProperty("id", sender_psid);
+		request_body.add("recipient", id);
+		request_body.add("message", reply);
+		String json = request_body.toString();
+		String uri = "https://graph.facebook.com/v2.6/me/messages?access_token=EAABZBJdRFAIQBAK17VVKvx0wJp7wookLbEiWl0V2sRoDhZBkukxjnmk2FooQ11GJmZCFCIfsl7Fwb76miiwf1lNyOynCYVWZBKorBzfQFHlxEpB8KJPxja1h9ZBUQd3ZCEemZCdTddVTdHcagxoIPQ2HTJxkX1FU4ZBdu0hzUulfPyizz15lImzs";
+		System.out.println(json);
+		CloseableHttpClient client = HttpClients.createDefault();
+	    HttpPost httpPost = new HttpPost(uri);
+	    StringEntity entity = new StringEntity(json);
+	    httpPost.setEntity(entity);
+	    httpPost.setHeader("Content-type", "application/json");
+	 
+	    CloseableHttpResponse response = client.execute(httpPost);
+	    System.out.println(response.getStatusLine());
+	    client.close();
+	}
     	
     static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
