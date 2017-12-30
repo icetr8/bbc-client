@@ -3,19 +3,7 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.halt;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
-
-import javax.servlet.http.Part;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -30,11 +18,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import configuration.Settings;
+
 import static spark.Spark.delete;
 import static spark.Spark.path;
-
 public class Main {
-	public static final String PAGE_ACCESS_TOKEN="<PAGE_ACCESS_TOKEN>";
 	private static final String something = null;
     public static void main(String[] args) throws Exception {
     	
@@ -42,7 +30,7 @@ public class Main {
         path("/webhook", () -> {
         	get("",       (request, response) -> {
         		// Your verify token. Should be a random string.
-        		String VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>";
+        		String VERIFY_TOKEN = Settings.VERIFY_TOKEN;
         		// Parse the query params
 
         		String mode = request.queryParams("hub.mode");
@@ -96,6 +84,11 @@ public class Main {
 	    
 		return messageObject;
     }
+    static String getPSID(JsonObject messagingobject) {
+    	 JsonObject message = messagingobject.getAsJsonObject("sender");
+    	 String psid = message.get("id").getAsString();
+    	 return psid;
+    }
     // Handles messages events
 	static void handleMessage(String sender_psid, JsonObject received_message) throws Exception {
 		JsonObject reply = new JsonObject();
@@ -131,7 +124,7 @@ public class Main {
 		request_body.add("recipient", id);
 		request_body.add("message", reply);
 		String json = request_body.toString();
-		String uri = "https://graph.facebook.com/v2.6/me/messages?access_token=EAABZBJdRFAIQBAK17VVKvx0wJp7wookLbEiWl0V2sRoDhZBkukxjnmk2FooQ11GJmZCFCIfsl7Fwb76miiwf1lNyOynCYVWZBKorBzfQFHlxEpB8KJPxja1h9ZBUQd3ZCEemZCdTddVTdHcagxoIPQ2HTJxkX1FU4ZBdu0hzUulfPyizz15lImzs";
+		String uri = "https://graph.facebook.com/v2.6/me/messages?access_token=" + Settings.PAGE_ACCESS_TOKEN;
 		System.out.println(json);
 		CloseableHttpClient client = HttpClients.createDefault();
 	    HttpPost httpPost = new HttpPost(uri);
@@ -149,7 +142,7 @@ public class Main {
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+        return Settings.PORT; //return default port if heroku-port isn't set (i.e. on localhost)
     }
 
 }
