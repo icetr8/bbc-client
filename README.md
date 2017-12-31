@@ -70,6 +70,21 @@ End with an example of getting some data out of the system or using it for a lit
 	]
 }
 ```
+- CHANGE GETS STARTED / GREETING
+  https://graph.facebook.com/v2.6/me/messenger_profile?access_token=
+```
+{ 
+  "get_started":{
+    "payload":"<GET_STARTED"
+  },
+  "greeting":[
+  {
+    "locale":"default",
+    "text":"Hello {{user_first_name}}! Welcome to BIT BLOCK CHAT. Chat with us to convert your PHP to BTC then Trade to other Cryptocurrency"
+  }
+]
+}
+```
 - [What's the difference between response.body() and object returned by the
   callback?](https://stackoverflow.com/questions/35256701/whats-the-difference-between-response-body-and-object-returned-by-the-callbac)
 
