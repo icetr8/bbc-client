@@ -25,7 +25,6 @@ public class Messenger {
 		String page = (String) map.get("object");
 		if (page.equalsIgnoreCase("page")) {
 			JsonObject messagingObject = getMessageObject(request.body());
-			System.out.println(request.body());
 			String sender_psid = getPSID(messagingObject);
 			HandleMessageEntry handle_message_entry = new HandleMessageEntry(sender_psid);
 			if (messagingObject.get("postback") != null) {

@@ -30,7 +30,7 @@ public class MessengerSend {
 		StringEntity entity = new StringEntity(json);
 		String responseString = EntityUtils.toString(entity, "UTF-8");
 		httpPost.setEntity(entity);
-		System.out.println(responseString);
+		//System.out.println(responseString);
 		httpPost.setHeader("Content-type", "application/json");
 
 		CloseableHttpResponse response = client.execute(httpPost);
