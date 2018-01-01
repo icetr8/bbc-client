@@ -5,14 +5,16 @@ import static spark.Spark.post;
 import configuration.Settings;
 
 import messenger.Messenger;
-
+import spark.Spark;
 public class Main {
 	private static final String something = null;
 
 	public static void main(String[] args) throws Exception {
 
 		port(getHerokuAssignedPort());
-
+		Spark.staticFiles.location("/public");
+        // Static files caching is disabled by default
+        // staticFiles.expireTime(600L);
 		get("/webhook", (request, response) -> {
 			Messenger messenger = new Messenger();
 			String Challenge = Messenger.verify_webhook(request, response);

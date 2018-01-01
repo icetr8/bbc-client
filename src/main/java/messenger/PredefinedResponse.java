@@ -183,4 +183,28 @@ public class PredefinedResponse {
 			"    	]\n" + 
 			"	}";
 	public final JsonElement BINANCE = new JsonParser().parse(binance);
+	/*
+	 {
+	  	"text": "Here's what can you do with your Cryptocompare",
+	  	"quick_replies":[
+	      {
+	        "content_type":"text",
+	        "title":"View Funds",
+	        "payload":"{'type':'binance', 'msg':'view_funds'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"Select A cryptocurrency",
+	        "payload":"{'type':'binance', 'msg':'select'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"trade_history",
+	        "payload":"{'type':'binance', 'msg':'history'}"
+	      }
+    	]
+	 }
+	 */
+	private String cryptocompare = "";
+	public final JsonElement CRYPTOCOMPARE = new JsonParser().parse(cryptocompare);
 }
