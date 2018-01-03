@@ -1,3 +1,5 @@
+
+
 package messenger;
 
 import com.google.gson.JsonElement;
@@ -5,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class PredefinedResponse {
+	String img_url = "https://coinsbot-client.herokuapp.com/";
 	/* Copy past this
 	  {
     	"text": "Select a option!",
@@ -12,21 +15,25 @@ public class PredefinedResponse {
 	      {
 	        "content_type":"text",
 	        "title":"Coins.ph",
+			"image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_.png",
 	        "payload":"{'type':'main_menu', 'msg':'coins.ph'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"binance",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/binance_.png",
 	        "payload":"{'type':'main_menu', 'msg':'binance'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"Cryptocompare",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/cryptocompare_.png",
 	        "payload":"{'type':'main_menu', 'msg':'cryptocompare'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"About",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/about_.png",
 	        "payload":"{'type':'main_menu', 'msg':'about'}"
 	      },
 	      {
@@ -36,34 +43,39 @@ public class PredefinedResponse {
   	}
 	 */
 	private String main_menu = 
-			" {\n" + 
+			"{\n" + 
 			"    	\"text\": \"Select a option!\",\n" + 
 			"    	\"quick_replies\":[\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"Coins.ph\",\n" + 
+			"			\"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_.png\",\n" + 
 			"	        \"payload\":\"{'type':'main_menu', 'msg':'coins.ph'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"binance\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/binance_.png\",\n" + 
 			"	        \"payload\":\"{'type':'main_menu', 'msg':'binance'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"Cryptocompare\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/cryptocompare_.png\",\n" + 
 			"	        \"payload\":\"{'type':'main_menu', 'msg':'cryptocompare'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"About\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/about_.png\",\n" + 
 			"	        \"payload\":\"{'type':'main_menu', 'msg':'about'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"location\"\n" + 
 			"	      }\n" + 
 			"      	]\n" + 
-			"  	}";
+			"  	}" + 
+			"";
 	public JsonElement MAIN_MENU = new JsonParser().parse(main_menu);
 	/*
 	 {
@@ -207,4 +219,41 @@ public class PredefinedResponse {
 	 */
 	private String cryptocompare = "";
 	public final JsonElement CRYPTOCOMPARE = new JsonParser().parse(cryptocompare);
+	/*
+	 {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements": [{
+            "title": "Select a percentage of conversion",                    
+            "buttons": [ {
+                "type":"postback",
+                "title":"100% ==  php",
+                "payload":"{'type':'menu','msg':'100%'}"
+            },
+            {
+                "type": "postback",
+                "title": "75% ==  php",
+				"payload":"{'type':'menu','msg':'75%'}"
+            }]
+          },
+          {
+            "title": "Select a percentage of conversion",
+            "buttons": [{
+                "type": "postback",
+                "title": "50% ==  php",
+                "payload":"{'type':'menu','msg':'50%'}"
+            },
+            {
+                "type": "postback",
+                "title": "25% ==  php",
+                "payload":"{'type':'menu','msg':'25%'}"
+            }]
+          }]
+        }
+	  }
+  	}
+	 */
+	private String btc_to_php = "";
 }
