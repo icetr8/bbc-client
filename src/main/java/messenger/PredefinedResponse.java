@@ -21,19 +21,19 @@ public class PredefinedResponse {
 	      {
 	        "content_type":"text",
 	        "title":"binance",
-	        "image_url":"https://coinsbot-client.herokuapp.com/images/binance_.png",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/binance.png",
 	        "payload":"{'type':'main_menu', 'msg':'binance'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"Cryptocompare",
-	        "image_url":"https://coinsbot-client.herokuapp.com/images/cryptocompare_.png",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/cryptocompare.png",
 	        "payload":"{'type':'main_menu', 'msg':'cryptocompare'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"About",
-	        "image_url":"https://coinsbot-client.herokuapp.com/images/about_.png",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/about.png",
 	        "payload":"{'type':'main_menu', 'msg':'about'}"
 	      },
 	      {
@@ -55,19 +55,19 @@ public class PredefinedResponse {
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"binance\",\n" + 
-			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/binance_.png\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/binance.png\",\n" + 
 			"	        \"payload\":\"{'type':'main_menu', 'msg':'binance'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"Cryptocompare\",\n" + 
-			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/cryptocompare_.png\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/cryptocompare.png\",\n" + 
 			"	        \"payload\":\"{'type':'main_menu', 'msg':'cryptocompare'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"About\",\n" + 
-			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/about_.png\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/about.png\",\n" + 
 			"	        \"payload\":\"{'type':'main_menu', 'msg':'about'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
@@ -84,21 +84,25 @@ public class PredefinedResponse {
 	       {
 	        "content_type":"text",
 	        "title":"Watch Price",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/watch.png",
 	        "payload":"{'type':'coinsph', 'msg':'watch_price'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"LOAD",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/load.PNG",
 	        "payload":"{'type':'coinsph', 'msg':'load'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"BALANCE",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/wallet.PNG",
 	        "payload":"{'type':'coins.ph', 'msg':'balance'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"Convert PHP to BTC",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/about.png",
 	        "payload":"{'type':'coins.ph', msg':'php_to_btc'}"
 	      },
 	      {
@@ -109,6 +113,7 @@ public class PredefinedResponse {
 	      {
 	        "content_type":"text",
 	        "title":"Transfer to Binance",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/transfer.png",
 	        "payload":"{'type':'coins.ph', 'msg':'transfer'}"
 	      }
       	]
@@ -121,21 +126,25 @@ public class PredefinedResponse {
 			"	       {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"Watch Price\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/watch.png\",\n" + 
 			"	        \"payload\":\"{'type':'coinsph', 'msg':'watch_price'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"LOAD\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/load.PNG\",\n" + 
 			"	        \"payload\":\"{'type':'coinsph', 'msg':'load'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"BALANCE\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/wallet.PNG\",\n" + 
 			"	        \"payload\":\"{'type':'coins.ph', 'msg':'balance'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"Convert PHP to BTC\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/about.png\",\n" + 
 			"	        \"payload\":\"{'type':'coins.ph', msg':'php_to_btc'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
@@ -146,6 +155,7 @@ public class PredefinedResponse {
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"Transfer to Binance\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/transfer.png\",\n" + 
 			"	        \"payload\":\"{'type':'coins.ph', 'msg':'transfer'}\"\n" + 
 			"	      }\n" + 
 			"      	]\n" + 
