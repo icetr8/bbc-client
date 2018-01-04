@@ -42,7 +42,7 @@ public class HandleMessageEntry {
 			default : System.out.println("Unrecognized msg"+msg+" with type of "+type);
 			}
 		}else if (type.equalsIgnoreCase("binance")) {
-			switch (payload.getAsString()) {
+			switch (msg) {
 	        
 	        case "view_funds": replies.main_menu_replies();
 	    		break;
@@ -54,7 +54,7 @@ public class HandleMessageEntry {
 	        	break;
 			}
 		}else if (type.equalsIgnoreCase("cryptocompare")) {
-			switch (payload.getAsString()) {
+			switch (msg) {
 	        case "select_a_cryptocurrency": replies.main_menu_replies();
 	    		break;
 	        case "notifications": replies.main_menu_replies();
