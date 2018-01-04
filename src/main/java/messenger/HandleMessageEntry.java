@@ -12,41 +12,72 @@ public class HandleMessageEntry {
 	}
 	// Handles messaging_postbacks events
 	void handlePostback( JsonObject received_postback) throws Exception {
-		JsonElement payload = received_postback.get("payload");
+		JsonElement postback = received_postback.get("payload");
 		Replies replies = new Replies(this.sender_psid);
-		switch (payload.getAsString()) {
-        case "GET_STARTED": replies.get_started(payload); 
-        	break;
-        case "MAIN_MENU": replies.main_menu_replies();
-            break;
-        case "LOAD": replies.main_menu_replies();
-        	break;
-        case "BALANCE": replies.main_menu_replies();
-    		break;
-        case "PHP_TO_BTC": replies.main_menu_replies();
-    		break;
-        case "BTC_TO_PHP": replies.main_menu_replies();
-    		break;
-        case "VIEW_FUNDS": replies.main_menu_replies();
-    		break;
-        case "TRADE_WITH_A_CRYPTOCURRENCY": replies.main_menu_replies();
-    		break;
-        case "TRADE_HISTORY": replies.main_menu_replies();
-    		break;
-        case "SELECT A CRYPTOCURRENCY": replies.main_menu_replies();
-    		break;
-        case "NOTIFICATIONS": replies.main_menu_replies();
-    		break;
-        default: System.out.println("Unrecognized Postback Payload" + payload);;
-        	break;
+		String s = postback.getAsString();
+		System.out.println(received_postback.toString());
+		JsonObject payload = fix_payload(s);
+		String type = payload.get("type").getAsString();
+		if ( payload.get("msg")==null) {
+			return;
+		}
+		String msg = payload.get("msg").getAsString();
+		
+		if (type.equalsIgnoreCase("main_menu")) {
+			switch(msg) {
+			 case "get_started": replies.get_started(payload); 
+	        	break;
+			default : System.out.println("Unrecognized msg"+msg+" with type of "+"type");;
+			}
+		}else if (type.equalsIgnoreCase("coinsph")) {
+			switch(msg) {
+			case "load": replies.main_menu_replies();
+        		break;
+	        case "balance": replies.main_menu_replies();
+	    		break;
+	        case "php_to_btc": replies.php_to_btc();
+	    		break;
+	        case "btc_to_php": replies.main_menu_replies();
+	    		break;
+			default : System.out.println("Unrecognized msg"+msg+" with type of "+type);
+			}
+		}else if (type.equalsIgnoreCase("binance")) {
+			switch (payload.getAsString()) {
+	        
+	        case "view_funds": replies.main_menu_replies();
+	    		break;
+	        case "trade_with_a_cryptocurrency": replies.main_menu_replies();
+	    		break;
+	        case "trade_history": replies.main_menu_replies();
+	    		break;
+	        default: System.out.println("Unrecognized msg"+msg+" with type of "+type);;
+	        	break;
+			}
+		}else if (type.equalsIgnoreCase("cryptocompare")) {
+			switch (payload.getAsString()) {
+	        case "select_a_cryptocurrency": replies.main_menu_replies();
+	    		break;
+	        case "notifications": replies.main_menu_replies();
+	    		break;
+	        default: System.out.println("Unrecognized msg"+msg+" with type of "+type);;
+	        	break;
+			}
 		}
 	}
 	private void handle_quick_reply(JsonElement quick_reply) throws Exception {
 		Replies replies = new Replies(this.sender_psid);
-		JsonObject payload = fix_payload(quick_reply);
+		System.out.println(quick_reply.toString());
+		JsonObject obj = (JsonObject) quick_reply;
+		String s = obj.get("payload").getAsString();
+		String payload_str = obj.toString();
+		System.out.println(s);
+		JsonObject payload = fix_payload(s);
 		String type = payload.get("type").getAsString();
+		if ( payload.get("msg")==null) {
+			return;
+		}
 		String msg = payload.get("msg").getAsString();
-		System.out.println(type);
+		
 		if (type.equalsIgnoreCase("main_menu")) {
 			switch(msg) {
 			case "coins.ph": replies.coinsph_replies();  
@@ -57,7 +88,7 @@ public class HandleMessageEntry {
 				break;
 			case "about": replies.coinsph_replies();
 				break;
-			default : System.out.println("Unrecognized msg"+msg+" with type of "+"type");;
+			default : System.out.println("Unrecognized msg"+msg+" with type of "+type);;
 			}
 		}else if (type.equalsIgnoreCase("coinsph")) {
 			switch(msg) {
@@ -67,36 +98,30 @@ public class HandleMessageEntry {
 				break;
 			case "balance": replies.coinsph_replies();
 				break;
-			case "php_to_btc": replies.coinsph_replies();
+			case "php_to_btc": replies.php_to_btc();
 				break;
 			case "btc_to_php": replies.coinsph_replies();
 				break;
 			case "transfer": replies.coinsph_replies();
 				break;
-			default : System.out.println("Unrecognized msg"+msg+" with type of "+"type");;
+			default : System.out.println("Unrecognized msg"+msg+" with type of "+type);;
 			}
 		}
 	}
 
 	// fix java shitty json parser return a payload object
-	private JsonObject fix_payload(JsonElement element) {
-		JsonObject obj = (JsonObject) element;
-		String str = obj.toString();
-	    if (str != null && str.length() > 0) {
-	        str = str.substring(0, str.length() - 2) + "}";
-	    }
-	    String str_= new StringBuilder(str).deleteCharAt(11).toString();
-
-	    String _str_ = str_.replaceAll("'", "\"");
+	private JsonObject fix_payload(String payload_str) {
+		String str = payload_str;
+	    String _str_ = str.replaceAll("'", "\"");
+	    System.out.println(_str_);
 	    JsonObject _payload_obj = (JsonObject) new JsonParser().parse(_str_);
-		JsonObject payload_obj = (JsonObject) _payload_obj.get("payload");
-	    return payload_obj;
+		//JsonObject payload_obj = (JsonObject) _payload_obj.get("payload");
+	    return _payload_obj;
 	}
 
 	void handleMessage(JsonObject received_message) throws Exception {
 		JsonObject reply = new JsonObject();
 		if (received_message.get("text") != null) {
-			System.out.println(received_message.toString());
 			if (received_message.get("quick_reply") != null) {
 				handle_quick_reply(received_message.get("quick_reply"));
 			}else {

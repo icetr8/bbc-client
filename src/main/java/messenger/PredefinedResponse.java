@@ -103,7 +103,7 @@ public class PredefinedResponse {
 	        "content_type":"text",
 	        "title":"Convert PHP to BTC",
 	        "image_url":"https://coinsbot-client.herokuapp.com/images/about.png",
-	        "payload":"{'type':'coins.ph', msg':'php_to_btc'}"
+	        "payload":"{'type':'coins.ph', 'msg':'php_to_btc'}"
 	      },
 	      {
 	        "content_type":"text",
@@ -145,7 +145,7 @@ public class PredefinedResponse {
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"Convert PHP to BTC\",\n" + 
 			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/about.png\",\n" + 
-			"	        \"payload\":\"{'type':'coins.ph', msg':'php_to_btc'}\"\n" + 
+			"	        \"payload\":\"{'type':'coins.ph', 'msg':'php_to_btc'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
@@ -236,34 +236,104 @@ public class PredefinedResponse {
       "payload": {
         "template_type": "generic",
         "elements": [{
-            "title": "Select a percentage of conversion",                    
+            "title": "Select a percentage of conversion",                   
             "buttons": [ {
                 "type":"postback",
-                "title":"100% ==  php",
-                "payload":"{'type':'menu','msg':'100%'}"
+                "title":"100% == %100 php",
+                "payload":"coinsph_btc_to_php_100%"
             },
             {
                 "type": "postback",
-                "title": "75% ==  php",
-				"payload":"{'type':'menu','msg':'75%'}"
+                "title": "75% == %75 php",
+				"payload":"coinsph_btc_to_php_100%"
             }]
           },
           {
             "title": "Select a percentage of conversion",
             "buttons": [{
                 "type": "postback",
-                "title": "50% ==  php",
-                "payload":"{'type':'menu','msg':'50%'}"
+                "title": "50% == %50 php",
+                "payload":"coinsph_btc_to_php_100%"
             },
             {
                 "type": "postback",
-                "title": "25% ==  php",
-                "payload":"{'type':'menu','msg':'25%'}"
+                "title": "25% == %25 php",
+                "payload":"coinsph_btc_to_php_100%"
             }]
           }]
         }
 	  }
   	}
 	 */
-	private String btc_to_php = "";
+	public String PHP_TO_BTC = ""
+			+ "{\n" + 
+			"    \"attachment\": {\n" + 
+			"      \"type\": \"template\",\n" + 
+			"      \"payload\": {\n" + 
+			"        \"template_type\": \"generic\",\n" + 
+			"        \"elements\": [{\n" + 
+			"            \"title\": \"Select a percentage of conversion\",                   \n" + 
+			"            \"buttons\": [ {\n" + 
+			"                \"type\":\"postback\",\n" + 
+			"                \"title\":\"100% == %100 php\",\n" + 
+			"                \"payload\":\"coinsph_btc_to_php_100%\"\n" + 
+			"            },\n" + 
+			"            {\n" + 
+			"                \"type\": \"postback\",\n" + 
+			"                \"title\": \"75% == %75 php\",\n" + 
+			"				\"payload\":\"coinsph_btc_to_php_100%\"\n" + 
+			"            }]\n" + 
+			"          },\n" + 
+			"          {\n" + 
+			"            \"title\": \"Select a percentage of conversion\",\n" + 
+			"            \"buttons\": [{\n" + 
+			"                \"type\": \"postback\",\n" + 
+			"                \"title\": \"50% == %50 php\",\n" + 
+			"                \"payload\":\"coinsph_btc_to_php_100%\"\n" + 
+			"            },\n" + 
+			"            {\n" + 
+			"                \"type\": \"postback\",\n" + 
+			"                \"title\": \"25% == %25 php\",\n" + 
+			"                \"payload\":\"coinsph_btc_to_php_100%\"\n" + 
+			"            }]\n" + 
+			"          }]\n" + 
+			"        }\n" + 
+			"	  }\n" + 
+			"  	}";
+	/*
+	 {
+   "attachment": {
+     "type": "template",
+     "payload": {
+       "template_type": "generic",
+       "elements": [{
+           "title": "Select a percentage of conversion",                    
+           "buttons": [ {
+               "type":"postback",
+               "title":"100% == %s php",
+               "payload":"{'type':'menu','msg':'100%'}"
+           },
+           {
+               "type": "postback",
+               "title": "75% == %s php",
+				"payload":"{'type':'menu','msg':'75%'}"
+           }]
+         },
+         {
+           "title": "Select a percentage of conversion",
+           "buttons": [{
+               "type": "postback",
+               "title": "50% == %s php",
+               "payload":"{'type':'menu','msg':'50%'}"
+           },
+           {
+               "type": "postback",
+               "title": "25% == %s php",
+               "payload":"{'type':'menu','msg':'25%'}"
+           }]
+         }]
+       }
+	  }
+ 	}
+	 */
 }

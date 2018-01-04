@@ -43,27 +43,27 @@
             {
               "title":"📲 Load",
               "type":"postback",
-              "payload":"PAYBILL_PAYLOAD"
+              "payload":"{'type':'coinsph', 'msg':'load'}"
             },
             {
                "title":"📘 Balance",
               "type":"postback",
-              "payload":"PAYBILL_PAYLOAD"
+              "payload":"{'type':'coinsph', 'msg':'balance'}"
             },
             {
               "title":"🔃 PHP to BTC",
               "type":"postback",
-              "payload":"PAYBILL_PAYLOAD"
+              "payload":"{'type':'coinsph', 'msg':'php_to_btc'}"
             },
             {
                "title":"🔄 BTC to PHP",
               "type":"postback",
-              "payload":"PAYBILL_PAYLOAD"
+              "payload":"{'type':'coinsph', 'msg':'btc_to_php'}"
             },
             {
                "title":"🔀 Transfer to Binance",
               "type":"postback",
-              "payload":"PAYBILL_PAYLOAD"
+              "payload":"{'type':'coinsph', 'msg':'transefer_to_binance'}"
             }
           ]
         },
@@ -74,17 +74,17 @@
             {
               "title":"📒 View Funds",
               "type":"postback",
-              "payload":"PAYBILL_PAYLOAD"
+              "payload":"{'type':'binance', 'msg':'view_funds'}"
             },
             {
-              "title":"🔁 Trade with cryptocurrency",
+              "title":"🔁 Trade with a cryptocurrency",
               "type":"postback",
-              "payload":"PAYBILL_PAYLOAD"
+              "payload":"{'type':'binance', 'msg':'trade_with_a_cryptocurrency'}"
             },
             {
                "title":"📚 Trade History",
               "type":"postback",
-              "payload":"PAYBILL_PAYLOAD"
+              "payload":"{'type':'binance', 'msg':'trade_history'}"
             }
           ]
         },
@@ -93,14 +93,14 @@
           "type":"nested",
           "call_to_actions":[
             {
-              "title":"💰 Select Cryptocurrency",
+              "title":"💰 Select a Cryptocurrency",
               "type":"postback",
-              "payload":"PAYBILL_PAYLOAD"
+              "payload":"{'type':'cryptocompare', 'msg':'select_a_cryptocurrency'}"
             },
             {
                "title":"⏰ Send me notif of a Crypto",
               "type":"postback",
-              "payload":"PAYBILL_PAYLOAD"
+              "payload":"{'type':'cryptocompare', 'msg':'notifications'}"
             }
           ]
         }
@@ -108,7 +108,7 @@
     }
   ],
   "get_started":{
-    "payload":"GET_STARTED"
+    "payload":"{'type':'main_menu', 'msg':'get_started'}"
   },
   "whitelisted_domains":[
     "https://coinsbot-client.herokuapp.com/",
