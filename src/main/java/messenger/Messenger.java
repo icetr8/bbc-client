@@ -30,11 +30,11 @@ public class Messenger {
 			if (messagingObject.get("postback") != null) {
 				
 				JsonObject messageObject = messagingObject.getAsJsonObject("postback");
-				handle_message_entry.handlePostback(sender_psid, messageObject);
+				handle_message_entry.handlePostback(messageObject);
 
 			} else if (messagingObject.get("message") != null) {
 				JsonObject messageObject = messagingObject.getAsJsonObject("message");
-				handle_message_entry.handleMessage(sender_psid, messageObject);
+				handle_message_entry.handleMessage( messageObject);
 			}
 
 		} else
