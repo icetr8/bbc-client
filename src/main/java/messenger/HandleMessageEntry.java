@@ -31,25 +31,31 @@ public class HandleMessageEntry {
 			}
 		}else if (type.equalsIgnoreCase("coinsph")) {
 			switch(msg) {
-			case "load": replies.main_menu_replies();
+			case "load": replies.load();
         		break;
-	        case "balance": replies.main_menu_replies();
+	        case "balance": replies.coinsph_balance();
 	    		break;
 	        case "php_to_btc": replies.php_to_btc();
 	    		break;
-	        case "btc_to_php": replies.main_menu_replies();
+	        case "btc_to_php": replies.btc_to_php();
 	    		break;
+	        case "transfer_to_binance": replies.transfer_to_binance();
+				break;
 			default : System.out.println("Unrecognized msg"+msg+" with type of "+type);
 			}
 		}else if (type.equalsIgnoreCase("binance")) {
 			switch (msg) {
 	        
-	        case "view_funds": replies.main_menu_replies();
+	        case "view_funds": replies.view_funds();
 	    		break;
 	        case "trade_with_a_cryptocurrency": replies.main_menu_replies();
 	    		break;
 	        case "trade_history": replies.main_menu_replies();
 	    		break;
+	        case "buy": replies.main_menu_replies();
+    			break;
+	        case "sell": replies.main_menu_replies();
+    			break;
 	        default: System.out.println("Unrecognized msg"+msg+" with type of "+type);;
 	        	break;
 			}
