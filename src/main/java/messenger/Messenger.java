@@ -60,7 +60,8 @@ public class Messenger {
 	}
 
 	// Sends response messages via the Send API
-	public static String verify_webhook(Request request, Response response) {
+	public static String verify_webhook(Request request, Response response) throws Exception {
+		Settings settings = new Settings();
 		String VERIFY_TOKEN = Settings.VERIFY_TOKEN;
 		// Parse the query params
 

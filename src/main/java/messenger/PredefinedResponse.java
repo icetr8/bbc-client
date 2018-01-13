@@ -238,7 +238,7 @@ public class PredefinedResponse {
         "elements": [{
             "title": "Select a percentage of conversion", 
             "subtitle":"You're total balance is %php php & %btc btc",
-            "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",                  
+            "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.jpg",
             "buttons": [ {
                 "type":"postback",
                 "title":"100% == %100 php",
@@ -252,6 +252,7 @@ public class PredefinedResponse {
           },
           {
             "title": "Select a percentage of conversion",
+            "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.jpg",
             "buttons": [{
                 "type": "postback",
                 "title": "50% == %50 php",
@@ -267,7 +268,7 @@ public class PredefinedResponse {
 	  }
   	}
 	 */
-	public String PHP_TO_BTC = " {\n" + 
+	public String PHP_TO_BTC = "{\n" + 
 			"    \"attachment\": {\n" + 
 			"      \"type\": \"template\",\n" + 
 			"      \"payload\": {\n" + 
@@ -275,7 +276,7 @@ public class PredefinedResponse {
 			"        \"elements\": [{\n" + 
 			"            \"title\": \"Select a percentage of conversion\", \n" + 
 			"            \"subtitle\":\"You're total balance is %php php & %btc btc\",\n" + 
-			"            \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png\",                  \n" + 
+			"            \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.jpg\",\n" + 
 			"            \"buttons\": [ {\n" + 
 			"                \"type\":\"postback\",\n" + 
 			"                \"title\":\"100% == %100 php\",\n" + 
@@ -289,6 +290,7 @@ public class PredefinedResponse {
 			"          },\n" + 
 			"          {\n" + 
 			"            \"title\": \"Select a percentage of conversion\",\n" + 
+			"            \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.jpg\",\n" + 
 			"            \"buttons\": [{\n" + 
 			"                \"type\": \"postback\",\n" + 
 			"                \"title\": \"50% == %50 php\",\n" + 
@@ -312,7 +314,7 @@ public class PredefinedResponse {
         "elements": [{
             "title": "Select a percentage of conversion",
             "subtitle":"You're total balance is %php php & %btc btc",
-            "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
+            "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.jpg",    
             "buttons": [ {
                 "type":"postback",
                 "title":"100% == %100 php",
@@ -326,6 +328,7 @@ public class PredefinedResponse {
           },
           {
             "title": "Select a percentage of conversion",
+            "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.jpg",    
             "buttons": [{
                 "type": "postback",
                 "title": "50% == %50 php",
@@ -349,7 +352,7 @@ public class PredefinedResponse {
 			"        \"elements\": [{\n" + 
 			"            \"title\": \"Select a percentage of conversion\",\n" + 
 			"            \"subtitle\":\"You're total balance is %php php & %btc btc\",\n" + 
-			"            \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png\",    \n" + 
+			"            \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.jpg\",    \n" + 
 			"            \"buttons\": [ {\n" + 
 			"                \"type\":\"postback\",\n" + 
 			"                \"title\":\"100% == %100 php\",\n" + 
@@ -363,6 +366,7 @@ public class PredefinedResponse {
 			"          },\n" + 
 			"          {\n" + 
 			"            \"title\": \"Select a percentage of conversion\",\n" + 
+			"            \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.jpg\",    \n" + 
 			"            \"buttons\": [{\n" + 
 			"                \"type\": \"postback\",\n" + 
 			"                \"title\": \"50% == %50 php\",\n" + 
@@ -615,7 +619,7 @@ public class PredefinedResponse {
        "elements": [{
            "title": "Select a Base currency",
            "subtitle":"Balance: %usd , %btc btc",
-           "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
+           "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.jpg",    
            "buttons": [ {
                "type":"postback",
                "title":"US DOLLAR",
@@ -630,7 +634,7 @@ public class PredefinedResponse {
          {
            "title": "Select a base currency",
            "subtitle":"Balance: %bnb bnb, %eth eth",
-           "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
+           "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.jpg",    
            "buttons": [{
                "type": "postback",
                "title": "BINANCE COINS",

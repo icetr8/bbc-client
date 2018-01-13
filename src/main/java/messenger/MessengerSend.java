@@ -13,7 +13,8 @@ import com.google.gson.JsonObject;
 import configuration.Settings;
 
 public class MessengerSend {
-	MessengerSend(){
+	MessengerSend() throws Exception{
+		Settings settings = new Settings();
 		String messenger_send_url = Settings.MESSENGER_SEND_URL;
 		String page_access_token = Settings.PAGE_ACCESS_TOKEN;
 	}
@@ -24,7 +25,10 @@ public class MessengerSend {
 		request_body.add("recipient", id);
 		request_body.add("message", message);
 		String json = request_body.toString();
+
+		Settings settings = new Settings();
 		String uri = Settings.MESSENGER_SEND_URL + Settings.PAGE_ACCESS_TOKEN;
+
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpPost httpPost = new HttpPost(uri);
 		StringEntity entity = new StringEntity(json);
