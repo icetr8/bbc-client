@@ -1,4 +1,5 @@
 import static spark.Spark.get;
+
 import static spark.Spark.port;
 import static spark.Spark.post;
 
@@ -6,10 +7,12 @@ import configuration.Settings;
 
 import messenger.Messenger;
 import spark.Spark;
+import coinsph.Coinsph;
 public class Main {
 	private static final String something = null;
 
 	public static void main(String[] args) throws Exception {
+		Coinsph coinsph = new Coinsph();
 
 		port(getHerokuAssignedPort());
 		Spark.staticFiles.location("/public");
