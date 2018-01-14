@@ -11,14 +11,14 @@ import com.google.gson.JsonParser;
 
 public class Settings {
 	
-	public static String PAGE_ACCESS_TOKEN="EAABZBJdRFAIQBAK17VVKvx0wJp7wookLbEiWl0V2sRoDhZBkukxjnmk2FooQ11GJmZCFCIfsl7Fwb76miiwf1lNyOynCYVWZBKorBzfQFHlxEpB8KJPxja1h9ZBUQd3ZCEemZCdTddVTdHcagxoIPQ2HTJxkX1FU4ZBdu0hzUulfPyizz15lImzs";
-	public static String VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>";
+	public static String PAGE_ACCESS_TOKEN= "";
+	public static String VERIFY_TOKEN = "";
 	public static final int PORT = 4567;
 	public static final String MESSENGER_SEND_URL = "https://graph.facebook.com/v2.6/me/messages?access_token=";
 	
 	// Coins.ph
-	public static String COINS_PH_API_KEY = "YTMYEShD6cXUjdnYK0y1krlCX4l9aIEr6AsAFDUN";
-	public static String COINS_PH_SECRET = "JO0qf16zQSDTrLVE0A1jOhlrGc5BCy7KvIdHJTMcHPzyUJYrtp";
+	public static String COINS_PH_API_KEY = "";
+	public static String COINS_PH_SECRET = "";
 	public static final String COINS_PH_URL = "https://coins.ph/api/v3/";
 	public Settings() throws Exception{
 		InputStream in = getClass().getResourceAsStream("/keys.json");
