@@ -25,10 +25,10 @@ public class Settings {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String json_string = ReadBigStringIn(reader);
 		JsonObject json= new JsonParser().parse(json_string).getAsJsonObject();;
-		this.PAGE_ACCESS_TOKEN= json.get("page_access_token").getAsString();
-		this.VERIFY_TOKEN = json.get("verify_token").getAsString();
-		this.COINS_PH_API_KEY = json.get("coinsph_api_key").getAsString();
-		this.COINS_PH_SECRET = json.get("coinsph_secret").getAsString();
+		Settings.PAGE_ACCESS_TOKEN= json.get("page_access_token").getAsString();
+		Settings.VERIFY_TOKEN = json.get("verify_token").getAsString();
+		Settings.COINS_PH_API_KEY = json.get("coinsph_api_key").getAsString();
+		Settings.COINS_PH_SECRET = json.get("coinsph_secret").getAsString();
 	}
 
 	private String ReadBigStringIn(BufferedReader buffIn) throws IOException {

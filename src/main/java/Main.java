@@ -13,12 +13,16 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Coinsph coinsph = new Coinsph();
-		coinsph.load("+639953274805", "10");
+		//coinsph.load("+639953274805", "10");
 		//coinsph.rates();
+		
 		port(getHerokuAssignedPort());
+		
 		Spark.staticFiles.location("/public");
         // Static files caching is disabled by default
         // staticFiles.expireTime(600L);
+
+		get("/secureHello", (req, res) -> "Hello Secure World");
 		get("/webhook", (request, response) -> {
 			Messenger messenger = new Messenger();
 			String Challenge = Messenger.verify_webhook(request, response);

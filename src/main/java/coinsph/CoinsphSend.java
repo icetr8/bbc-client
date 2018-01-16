@@ -16,16 +16,17 @@ import configuration.Settings;
 
 public class CoinsphSend {
 	public String get_request(String url, String body) throws Exception {
+		Settings settings = new Settings();
 		String nonce = String.valueOf(System.currentTimeMillis());
 		String message = nonce + url + (body != null ? body : "");
 		
 		Mac mac = Mac.getInstance("HmacSHA256");
-		mac.init(new SecretKeySpec(Settings.COINS_PH_SECRET.getBytes(), "HmacSHA256"));
+		mac.init(new SecretKeySpec(settings.COINS_PH_SECRET.getBytes(), "HmacSHA256"));
 		String signature = new String(Hex.encodeHex(mac.doFinal(message.getBytes())));
 		
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpGet httpGet = new HttpGet(url);
-		httpGet.setHeader("ACCESS_KEY", Settings.COINS_PH_API_KEY);
+		httpGet.setHeader("ACCESS_KEY", settings.COINS_PH_API_KEY);
 		httpGet.setHeader("ACCESS_SIGNATURE", signature);
 		httpGet.setHeader("ACCESS_NONCE", nonce);
 		httpGet.setHeader("Content-Type", "application/json;charset=UTF-8");
@@ -40,16 +41,17 @@ public class CoinsphSend {
 	}
 	
 	public String post_request(String url, String body) throws Exception {
+		Settings settings = new Settings();
 		String nonce = String.valueOf(System.currentTimeMillis());
 		String message = nonce + url + (body != null ? body : "");
 		
 		Mac mac = Mac.getInstance("HmacSHA256");
-		mac.init(new SecretKeySpec(Settings.COINS_PH_SECRET.getBytes(), "HmacSHA256"));
+		mac.init(new SecretKeySpec(settings.COINS_PH_SECRET.getBytes(), "HmacSHA256"));
 		String signature = new String(Hex.encodeHex(mac.doFinal(message.getBytes())));
 		
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpPost httpPost = new HttpPost(url);
-		httpPost.setHeader("ACCESS_KEY", Settings.COINS_PH_API_KEY);
+		httpPost.setHeader("ACCESS_KEY", settings.COINS_PH_API_KEY);
 		httpPost.setHeader("ACCESS_SIGNATURE", signature);
 		httpPost.setHeader("ACCESS_NONCE", nonce);
 		httpPost.setHeader("Content-Type", "application/json");
