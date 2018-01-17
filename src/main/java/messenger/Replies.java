@@ -1,7 +1,10 @@
 package messenger;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import coinsph.Coinsph;
 
 public class Replies {
 	private String sender_psid;
@@ -73,10 +76,12 @@ public class Replies {
 	}
 	public void coinsph_balance() throws Exception {
 		PredefinedResponse predefined = new PredefinedResponse();
-		
+		Coinsph coinsph = new Coinsph();
+		JsonObject data = coinsph.check_balance();
 		// add values base on balance
-		String s1 = predefined.coinsph_balance.replaceAll("%balance", "100MIllion");
-		String balance = s1.replaceAll("%bitcoin", "75btc");
+		
+		String s1 = predefined.coinsph_balance.replaceAll("%balance", data.get("peso_balance").getAsString());
+		String balance = s1.replaceAll("%bitcoin", data.get("btc_balance").getAsString());
 
 		JsonElement reply = new JsonParser().parse(balance);
 		MessengerSend messenger_send = new MessengerSend();

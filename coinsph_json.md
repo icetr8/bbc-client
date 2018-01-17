@@ -1,4 +1,4 @@
-- balance
+- balance api/v3/crypto-accounts/
 
 ```
 {
@@ -9,13 +9,13 @@
 	},
 	"crypto-accounts": [
 		{
-			"id": "eadc41eeddcc468393cd27992267aec1",
+			"id": "eadc4sensored92267aec1",
 			"name": "Default Account",
 			"currency": "PBTC",
 			"balance": "0.33",
 			"pending_balance": "0",
 			"total_received": "4478.24",
-			"default_address": "9207bcca26de4fada27e25804cc5ae96",
+			"default_address": "9207bcsensored5804cc5ae96",
 			"is_default": true
 		},
 		{
@@ -25,17 +25,17 @@
 			"balance": "0.00268165",
 			"pending_balance": "0",
 			"total_received": "0.00545661",
-			"default_address": "3NVMUhCdf9tTrNnD4fmxivJWbr82nVMjuy",
+			"default_address": "3NVMsensored2nVMjuy",
 			"is_default": true
 		},
 		{
-			"id": "81ec77dd5a7b4840a5cb8e74e1b02e46",
+			"id": "81ec7sensorede1b02e46",
 			"name": "Default Account",
 			"currency": "CLP",
 			"balance": "0",
 			"pending_balance": "0",
 			"total_received": "0",
-			"default_address": "0702249a28fa49a6824fa97a26203e41",
+			"default_address": "0702249sensored7a26203e41",
 			"is_default": true
 		}
 	]

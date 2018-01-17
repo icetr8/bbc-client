@@ -505,11 +505,11 @@ public class PredefinedResponse {
 			"	 }";
 	/*
 	 {
-	  	"text": "You have %balance php and %bitcoin btc. If you want to use some of these funds, just load and get 10% rebate or transfer and start trading it with binance exchange"
+	  	"text": "You have %balance php and %bitcoin btc.\nIf you want to use some of these funds, just load and get 10% rebate or transfer and start trading it with binance exchange"
 	 }
 	 */
 	public String coinsph_balance = " {\n" + 
-			"	  	\"text\": \"You have %balance php and %bitcoin btc. If you want to use some of these funds, just load and get 10% rebate or transfer and start trading it with binance exchange\"\n" + 
+			"	  	\"text\": \"You have %balance php and %bitcoin btc.\nIf you want to use some of these funds, just load and get 10% rebate or transfer and start trading it with binance exchange\"\n" + 
 			"	 }";
 	/*
 	 {

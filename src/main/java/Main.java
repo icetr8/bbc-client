@@ -13,9 +13,10 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Coinsph coinsph = new Coinsph();
+		coinsph.check_balance();
 		//coinsph.load("+639953274805", "10");
 		//coinsph.rates();
-		
+		//coinsph.transfer("testing", "1");
 		port(getHerokuAssignedPort());
 		
 		Spark.staticFiles.location("/public");
