@@ -2,6 +2,9 @@ package coinsph;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -19,19 +22,36 @@ public class Coinsph {
 		data.addProperty("peso_balance", peso_balance);
 		String btc_balance = accounts.get(1).getAsJsonObject().get("balance").getAsString();
 		data.addProperty("btc_balance", btc_balance);
-		System.out.println(btc_balance);
+
 		return data;
 	}
 	
-	public String transfer(String address, String amount) throws Exception {
+	public String transfer(String address, int amount) throws Exception {
 		String url = "https://coins.ph/api/v3/transfers/";
-		String body = "";
+		JsonObject body = new JsonObject();
+		body.addProperty("target_address", address);
+		body.addProperty("amount", amount);
 		
 		JsonArray accounts = get_crypto_accounts();
-		String btc_balance = accounts.get(1).getAsJsonObject().get("balance").getAsString();
+		String id = accounts.get(1).getAsJsonObject().get("id").getAsString();
+		body.addProperty("account", id);
 		
+		CoinsphSend send = new CoinsphSend();
+		String response_data = send.post_request(url, body.toString());
+		JsonObject data = new JsonParser().parse(response_data).getAsJsonObject();
+	
+		String message = "";
+		if(data.get("errors")!=null) {
+			JsonObject errors = data.getAsJsonObject().get("errors").getAsJsonObject();
+			Set set = errors.keySet();
+			List list = new ArrayList(set);
+			message = (String) list.get(0);
+			message += " " + errors.get(message).getAsJsonArray().get(0);
+		}else {
+			message = "You have succesfully transfer with an amount of " + amount + " btc to " + address ;
+		}
 		
-		return "OK";
+		return message;
 	}
 
 	public String load(String number, String load_value) throws Exception {
@@ -48,7 +68,6 @@ public class Coinsph {
 		
 		CoinsphSend send = new CoinsphSend();
 		String response_data = send.post_request(url, body.toString());
-		System.out.println(response_data);
 		
 		JsonObject data = new JsonParser().parse(response_data).getAsJsonObject();
 		
@@ -61,9 +80,9 @@ public class Coinsph {
 			message = "You have succesfully load " + amount + " php";
 		}
 
-		return message;
-		 
+		return message; 
 	}
+	
 	public void payin_outlets() throws Exception {
 		String url = "https://coins.ph/d/api/payin-outlets/";
 		String body = "";

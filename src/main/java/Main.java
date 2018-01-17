@@ -13,7 +13,8 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Coinsph coinsph = new Coinsph();
-		coinsph.check_balance();
+		//coinsph.transfer("1Eaizt9XqWYY7NBR67kAxN6JEmn8sP4Sf2", 4);
+		//coinsph.check_balance();
 		//coinsph.load("+639953274805", "10");
 		//coinsph.rates();
 		//coinsph.transfer("testing", "1");
