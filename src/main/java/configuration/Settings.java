@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import com.binance.api.client.BinanceApiClientFactory;
+import com.binance.api.client.BinanceApiRestClient;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -20,6 +22,9 @@ public class Settings {
 	public static String COINS_PH_API_KEY = "";
 	public static String COINS_PH_SECRET = "";
 	public static final String COINS_PH_URL = "https://coins.ph/api/v3/";
+	
+	//binance
+	public static BinanceApiRestClient client;
 	public Settings() throws Exception{
 		InputStream in = getClass().getResourceAsStream("/keys.json");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -29,6 +34,11 @@ public class Settings {
 		Settings.VERIFY_TOKEN = json.get("verify_token").getAsString();
 		Settings.COINS_PH_API_KEY = json.get("coinsph_api_key").getAsString();
 		Settings.COINS_PH_SECRET = json.get("coinsph_secret").getAsString();
+		
+		String api_key = json.get("binance_api_key").getAsString();
+		String binance_secret = json.get("binance_secret").getAsString();
+		BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(api_key, binance_secret);
+		this.client = factory.newRestClient();
 	}
 
 	private String ReadBigStringIn(BufferedReader buffIn) throws IOException {

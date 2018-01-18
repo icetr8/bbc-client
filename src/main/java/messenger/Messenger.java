@@ -2,6 +2,10 @@ package messenger;
 
 import static spark.Spark.halt;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -16,9 +20,10 @@ import spark.Request;
 import spark.Response;
 
 public class Messenger {
-	private static final String something = null;
-	
-	public static String event_reciever(Request request, Response response) throws Exception {
+	JsonObject json = new JsonObject();
+
+	public String event_reciever(Request request, Response response) throws Exception {
+		
 		String body = request.body();
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> map = mapper.readValue(body, Map.class);
@@ -81,5 +86,4 @@ public class Messenger {
 		}
 		return "NOTHING";
 	}
-	
 }

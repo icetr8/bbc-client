@@ -3,6 +3,15 @@ import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.post;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import binance.Binance;
 import configuration.Settings;
 
 import messenger.Messenger;
@@ -18,12 +27,14 @@ public class Main {
 		//coinsph.load("+639953274805", "10");
 		//coinsph.rates();
 		//coinsph.transfer("testing", "1");
+		Binance binance = new Binance();
+		binance.view_funds();
 		port(getHerokuAssignedPort());
 		
 		Spark.staticFiles.location("/public");
         // Static files caching is disabled by default
         // staticFiles.expireTime(600L);
-
+		
 		get("/secureHello", (req, res) -> "Hello Secure World");
 		get("/webhook", (request, response) -> {
 			Messenger messenger = new Messenger();
@@ -32,10 +43,11 @@ public class Main {
 		});
 		post("/webhook", (request, response) -> {
 			Messenger messenger = new Messenger();
-			String res = Messenger.event_reciever(request, response);
+			String res = messenger.event_reciever(request, response);
 			return res;
 		});
 	}
+	
 	static int getHerokuAssignedPort() {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		if (processBuilder.environment().get("PORT") != null) {
@@ -43,5 +55,6 @@ public class Main {
 		}
 		return Settings.PORT; // return default port if heroku-port isn't set (i.e. on localhost)
 	}
-
+	
+	
 }
