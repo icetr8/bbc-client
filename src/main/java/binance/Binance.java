@@ -51,4 +51,10 @@ public class Binance {
 	public void trade_history() throws Exception {
 		
 	}
+	public void sell_market_order() {
+		
+	}
+	public void buy_market_order() {
+		
+	}
 }
