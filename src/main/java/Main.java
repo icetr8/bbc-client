@@ -27,7 +27,8 @@ public class Main {
 		//coinsph.load("+639953274805", "10");
 		//coinsph.rates();
 		//coinsph.transfer("testing", "1");
-		coinsph.php_to_btc(200.0);
+		//coinsph.php_to_btc(200.0);
+		//coinsph.btc_to_php(0.000001);
 		Binance binance = new Binance();
 		//binance.view_funds();
 		port(getHerokuAssignedPort());

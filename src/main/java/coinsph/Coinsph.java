@@ -154,4 +154,40 @@ public class Coinsph {
 		return data;
 		
 	}
+	public JsonObject btc_to_php(double source_amount) throws Exception {
+		String url = "https://coins.ph/api/v3/crypto-exchanges/";
+		JsonObject body = new JsonObject();
+		
+		body.addProperty("source_amount", source_amount);
+		
+		JsonArray accounts = get_crypto_accounts();
+		String peso_id = accounts.get(1).getAsJsonObject().get("id").getAsString();
+		body.addProperty("source_account", peso_id);
+		String btc_id = accounts.get(0).getAsJsonObject().get("id").getAsString();
+		body.addProperty("target_account", btc_id);
+		
+		CoinsphSend send = new CoinsphSend();
+		String response_data = send.post_request(url, body.toString());
+		JsonObject response = new JsonParser().parse(response_data).getAsJsonObject();
+		
+		
+		JsonObject data = new JsonObject();
+		if(response.get("errors")!=null) {
+			JsonObject errors = response.getAsJsonObject().get("errors").getAsJsonObject();
+			Set set = errors.keySet();
+			List list = new ArrayList(set);
+			data.addProperty("error_type", (String) list.get(0));
+			String error_type = data.get("error_type").getAsString();
+			data.addProperty("error", errors.get(error_type).getAsJsonArray().getAsString() );
+			
+		}else {
+			JsonObject exchange = response.get("crypto-exchange").getAsJsonObject();
+			data.addProperty("source_amount", source_amount);
+			data.addProperty("target_amount", exchange.get("target_amount").getAsString());
+			data.addProperty("rate", exchange.get("rate").getAsString());
+		}
+
+		return data;
+		
+	}
 }
