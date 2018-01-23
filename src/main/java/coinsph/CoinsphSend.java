@@ -60,7 +60,7 @@ public class CoinsphSend {
 		httpPost.setEntity(entity);
 		String responseString = EntityUtils.toString(entity, "UTF-8");
 		httpPost.setEntity(entity);
-		System.out.println(responseString);
+		//System.out.println(responseString);
 
 		CloseableHttpResponse response = client.execute(httpPost);
 		String responseAsString = EntityUtils.toString(response.getEntity());

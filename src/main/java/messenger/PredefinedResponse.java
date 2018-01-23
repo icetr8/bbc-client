@@ -242,12 +242,12 @@ public class PredefinedResponse {
             "buttons": [ {
                 "type":"postback",
                 "title":"100% == %100 php",
-                "payload":"{'type':'coinsph_php_to_btc', 'msg':'100%'}"
+                "payload":"{'type':'coinsph_php_to_btc', 'msg':'100'}"
             },
             {
                 "type": "postback",
                 "title": "75% == %75 php",
-				"payload":"{'type':'coinsph_php_to_btc', 'msg':'75%'}"
+				"payload":"{'type':'coinsph_php_to_btc', 'msg':'75'}"
             }]
           },
           {
@@ -256,12 +256,12 @@ public class PredefinedResponse {
             "buttons": [{
                 "type": "postback",
                 "title": "50% == %50 php",
-                "payload":"{'type':'coinsph_php_to_btc', 'msg':'50%'}"
+                "payload":"{'type':'coinsph_php_to_btc', 'msg':'50'}"
             },
             {
                 "type": "postback",
                 "title": "25% == %25 php",
-                "payload":"{'type':'coinsph_php_to_btc', 'msg':'25%'}"
+                "payload":"{'type':'coinsph_php_to_btc', 'msg':'25'}"
             }]
           }]
         }
@@ -280,12 +280,12 @@ public class PredefinedResponse {
 			"            \"buttons\": [ {\n" + 
 			"                \"type\":\"postback\",\n" + 
 			"                \"title\":\"100% == %100 php\",\n" + 
-			"                \"payload\":\"{'type':'coinsph_php_to_btc', 'msg':'100%'}\"\n" + 
+			"                \"payload\":\"{'type':'coinsph_php_to_btc', 'msg':'100'}\"\n" + 
 			"            },\n" + 
 			"            {\n" + 
 			"                \"type\": \"postback\",\n" + 
 			"                \"title\": \"75% == %75 php\",\n" + 
-			"				\"payload\":\"{'type':'coinsph_php_to_btc', 'msg':'75%'}\"\n" + 
+			"				\"payload\":\"{'type':'coinsph_php_to_btc', 'msg':'75'}\"\n" + 
 			"            }]\n" + 
 			"          },\n" + 
 			"          {\n" + 
@@ -294,12 +294,12 @@ public class PredefinedResponse {
 			"            \"buttons\": [{\n" + 
 			"                \"type\": \"postback\",\n" + 
 			"                \"title\": \"50% == %50 php\",\n" + 
-			"                \"payload\":\"{'type':'coinsph_php_to_btc', 'msg':'50%'}\"\n" + 
+			"                \"payload\":\"{'type':'coinsph_php_to_btc', 'msg':'50'}\"\n" + 
 			"            },\n" + 
 			"            {\n" + 
 			"                \"type\": \"postback\",\n" + 
 			"                \"title\": \"25% == %25 php\",\n" + 
-			"                \"payload\":\"{'type':'coinsph_php_to_btc', 'msg':'25%'}\"\n" + 
+			"                \"payload\":\"{'type':'coinsph_php_to_btc', 'msg':'25'}\"\n" + 
 			"            }]\n" + 
 			"          }]\n" + 
 			"        }\n" + 
@@ -318,12 +318,12 @@ public class PredefinedResponse {
             "buttons": [ {
                 "type":"postback",
                 "title":"100% == %100 php",
-                "payload":"{'type':'coinsph_btc_to_php', 'msg':'100%'}"
+                "payload":"{'type':'coinsph_btc_to_php', 'msg':'100'}"
             },
             {
                 "type": "postback",
                 "title": "75% == %75 php",
-				"payload":"{'type':'coinsph_btc_to_php', 'msg':'75%'}"
+				"payload":"{'type':'coinsph_btc_to_php', 'msg':'75'}"
             }]
           },
           {
@@ -332,12 +332,12 @@ public class PredefinedResponse {
             "buttons": [{
                 "type": "postback",
                 "title": "50% == %50 php",
-                "payload":"{'type':'coinsph_btc_to_php', 'msg':'50%'}"
+                "payload":"{'type':'coinsph_btc_to_php', 'msg':'50'}"
             },
             {
                 "type": "postback",
                 "title": "25% == %25 php",
-                "payload":"{'type':'coinsph_btc_to_php', 'msg':'25%'}"
+                "payload":"{'type':'coinsph_btc_to_php', 'msg':'25'}"
             }]
           }]
         }
@@ -356,12 +356,12 @@ public class PredefinedResponse {
 			"            \"buttons\": [ {\n" + 
 			"                \"type\":\"postback\",\n" + 
 			"                \"title\":\"100% == %100 php\",\n" + 
-			"                \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'100%'}\"\n" + 
+			"                \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'100'}\"\n" + 
 			"            },\n" + 
 			"            {\n" + 
 			"                \"type\": \"postback\",\n" + 
 			"                \"title\": \"75% == %75 php\",\n" + 
-			"				\"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'75%'}\"\n" + 
+			"				\"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'75'}\"\n" + 
 			"            }]\n" + 
 			"          },\n" + 
 			"          {\n" + 
@@ -370,12 +370,12 @@ public class PredefinedResponse {
 			"            \"buttons\": [{\n" + 
 			"                \"type\": \"postback\",\n" + 
 			"                \"title\": \"50% == %50 php\",\n" + 
-			"                \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'50%'}\"\n" + 
+			"                \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'50'}\"\n" + 
 			"            },\n" + 
 			"            {\n" + 
 			"                \"type\": \"postback\",\n" + 
 			"                \"title\": \"25% == %25 php\",\n" + 
-			"                \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'25%'}\"\n" + 
+			"                \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'25'}\"\n" + 
 			"            }]\n" + 
 			"          }]\n" + 
 			"        }\n" + 
@@ -388,57 +388,57 @@ public class PredefinedResponse {
 	      {
 	        "content_type":"text",
 	        "title":"₱ 10",
-	        "payload":"{'type':'coinsph_load', 'msg':'10L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'10'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"₱ 15",
-	        "payload":"{'type':'coinsph_load', 'msg':'15L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'15'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"₱ 20",
-	        "payload":"{'type':'coinsph_load', 'msg':'20L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'20'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"₱ 25",
-	        "payload":"{'type':'coinsph_load', 'msg':'25L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'25'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"₱ 30",
-	        "payload":"{'type':'coinsph_load', 'msg':'30L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'30'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"₱ 50",
-	        "payload":"{'type':'coinsph_load', 'msg':'50L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'50'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"₱ 70",
-	        "payload":"{'type':'coinsph_load', 'msg':'70L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'70'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"₱ 100",
-	        "payload":"{'type':'coinsph_load', 'msg':'100L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'100'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"₱ 300",
-	        "payload":"{'type':'coinsph_load', 'msg':'300L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'300'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"₱ 500",
-	        "payload":"{'type':'coinsph_load', 'msg':'500L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'500'}"
 	      },
 	      {
 	        "content_type":"text",
 	        "title":"₱ 1000",
-	        "payload":"{'type':'coinsph_load', 'msg':'1000L'}"
+	        "payload":"{'type':'coinsph_load', 'msg':'1000'}"
 	      }
    	]
 	 }
@@ -449,57 +449,57 @@ public class PredefinedResponse {
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 10\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'10L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'10'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 15\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'15L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'15'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 20\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'20L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'20'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 25\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'25L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'25'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 30\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'30L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'30'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 50\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'50L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'50'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 70\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'70L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'70'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 100\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'100L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'100'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 300\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'300L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'300'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 500\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'500L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'500'}\"\n" + 
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
 			"	        \"title\":\"₱ 1000\",\n" + 
-			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'1000L'}\"\n" + 
+			"	        \"payload\":\"{'type':'coinsph_load', 'msg':'1000'}\"\n" + 
 			"	      }\n" + 
 			"   	]\n" + 
 			"	 }";

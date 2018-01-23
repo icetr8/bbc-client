@@ -31,6 +31,7 @@ public class Main {
 		//coinsph.btc_to_php(0.000001);
 		Binance binance = new Binance();
 		//binance.view_funds();
+		//binance.sell_market_order("BTCUSDT", "3000");
 		port(getHerokuAssignedPort());
 		
 		Spark.staticFiles.location("/public");
