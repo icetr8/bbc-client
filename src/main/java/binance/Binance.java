@@ -19,13 +19,15 @@ import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.OrderBookEntry;
 import com.binance.api.client.domain.market.TickerStatistics;
 import com.binance.api.client.exception.*;
+import com.google.gson.JsonObject;
+
 import configuration.Settings;
 
 import static com.binance.api.client.domain.account.NewOrder.marketBuy;
 import static com.binance.api.client.domain.account.NewOrder.limitBuy;
 
 public class Binance {
-	public void view_funds() throws Exception {
+	public JsonObject view_funds() throws Exception {
 		Settings settings = new Settings();
 		BinanceApiRestClient client =settings.client;
 		Account account = client.getAccount();
@@ -57,8 +59,12 @@ public class Binance {
 		
 		System.out.println(usdt_value);
 		NumberFormat formatter = new DecimalFormat("#0.00000000");     
-		System.out.println(formatter.format(total_bitcoin) + "bitcoin");
-		System.out.println(assets);
+		String btc_value = formatter.format(total_bitcoin);
+		JsonObject data = new JsonObject();
+		data.addProperty("usdt_value", usdt_value);
+		data.addProperty("btc_value", btc_value);
+		data.addProperty("assets", assets);
+		return data;
 	}
 	
 	public void trade_history() throws Exception {
@@ -85,7 +91,35 @@ public class Binance {
 		    System.out.println(priceFilter.getTickSize());
 		}
 	}
-	public void buy_market_order() {
+	public void buy_market_order(String symbol, String quantity) throws Exception {
+		Settings settings = new Settings();
+		 BinanceApiRestClient client = settings.client;
+		boolean test = false; //settings.binance_test_order;
 		
+		if (test==true) {
+			//test orders
+			
+			ExchangeInfo exchangeInfo = client.getExchangeInfo();
+		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo("TRXBTC");
+			SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.PRICE_FILTER);
+			System.out.println(priceFilter.getMinPrice());
+		    System.out.println(priceFilter.getTickSize());
+		    
+		    // amount > getminprice then proceed if not show min price error
+			NewOrder order = marketBuy(symbol, quantity);
+			client.newOrderTest(order);
+			// insert balance is sufficient
+		}
+		else {
+			//real orders
+			ExchangeInfo exchangeInfo = client.getExchangeInfo();
+		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo("TRXBTC");
+			SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.PRICE_FILTER);
+			System.out.println(priceFilter.getMinPrice());
+		    System.out.println(priceFilter.getTickSize());
+		    
+		    // amount > getminprice then proceed if not show min price error
+		    
+		}
 	}
 }

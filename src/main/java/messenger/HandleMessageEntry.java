@@ -75,15 +75,26 @@ public class HandleMessageEntry {
 			}
 		}else if (type.equalsIgnoreCase("coinsph_php_to_btc")) {
 			if (msg.equalsIgnoreCase("100")) {
-				// insert replies
+				replies.php_to_btc_send(100);
 			}else if (msg.equalsIgnoreCase("75")) {
-				// insert replies.php_to_btc(75)
+				replies.php_to_btc_send(75);
 			}else if (msg.equalsIgnoreCase("50")) {
-				// insert replies.php_to_btc(75)
+				replies.php_to_btc_send(50);
 			}else if (msg.equalsIgnoreCase("25")) {
-				// insert replies.php_to_btc(75)
+				replies.php_to_btc_send(25);
+			}
+		}else if (type.equalsIgnoreCase("coinsph_btc_to_php")) {
+			if (msg.equalsIgnoreCase("100")) {
+				replies.btc_to_php_send(100);
+			}else if (msg.equalsIgnoreCase("75")) {
+				replies.btc_to_php_send(75);
+			}else if (msg.equalsIgnoreCase("50")) {
+				replies.btc_to_php_send(50);
+			}else if (msg.equalsIgnoreCase("25")) {
+				replies.btc_to_php_send(25);
 			}
 		}
+		
 	}
 	private void handle_quick_reply(JsonElement quick_reply) throws Exception {
 		Replies replies = new Replies(this.sender_psid);
