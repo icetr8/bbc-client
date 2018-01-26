@@ -58,18 +58,14 @@ public class HandleMessageEntry {
 				replies.main_menu_replies();
 			}
 		}else if (type.equalsIgnoreCase("cryptocompare")) {
-			switch (msg) {
-	        case "select_a_cryptocurrency": replies.main_menu_replies();
-	    		break;
-	        case "notifications": replies.main_menu_replies();
-	    		break;
-	        default: System.out.println("Unrecognized msg"+msg+" with type of "+type);;
-	        	break;
-			}
+			System.out.println(msg);
 			if(msg.equalsIgnoreCase("select_a_cryptocurrency")) {
 				replies.main_menu_replies();
 			}else if(msg.equalsIgnoreCase("notifications")) {
 				replies.main_menu_replies();
+			}
+			else if(msg.equalsIgnoreCase("seven_eleven")) {
+				replies.seven_eleven_enter();
 			}
 		}else if (type.equalsIgnoreCase("coinsph_php_to_btc") && get_state().get("messenger_state").getAsString().equalsIgnoreCase("php_btc") ) {
 			if (msg.equalsIgnoreCase("100")) {
@@ -188,10 +184,15 @@ public class HandleMessageEntry {
 					
 					if ( state.equalsIgnoreCase("load_number")) {
 						replies.load_number(text);
-					}else {
-					reply.addProperty("text",
-							"You sent the message: " + received_message.get("text") + ". Now send me an image!");				
-					messenger_send.callSendAPI(sender_psid, reply);
+					}else if ( state.equalsIgnoreCase("seven_eleven_enter")) {
+						replies.seven_eleven_amount(text);
+					}else if (text.length() ==14){
+						replies.seven_eleven_barcode(text);
+					}else 
+					{
+						reply.addProperty("text",
+								"You sent the message: " + received_message.get("text") + ". Now send me an image!");				
+						messenger_send.callSendAPI(sender_psid, reply);
 					}
 					
 					

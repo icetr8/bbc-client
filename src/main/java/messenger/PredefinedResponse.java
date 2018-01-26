@@ -26,7 +26,7 @@ public class PredefinedResponse {
 	      },
 	      {
 	        "content_type":"text",
-	        "title":"Cryptocompare",
+	        "title":"Others",
 	        "image_url":"https://coinsbot-client.herokuapp.com/images/cryptocompare.png",
 	        "payload":"{'type':'main_menu', 'msg':'cryptocompare'}"
 	      },
@@ -60,7 +60,7 @@ public class PredefinedResponse {
 			"	      },\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
-			"	        \"title\":\"Cryptocompare\",\n" + 
+			"	        \"title\":\"Others\",\n" + 
 			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/cryptocompare.png\",\n" + 
 			"	        \"payload\":\"{'type':'main_menu', 'msg':'cryptocompare'}\"\n" + 
 			"	      },\n" + 
@@ -74,8 +74,7 @@ public class PredefinedResponse {
 			"	        \"content_type\":\"location\"\n" + 
 			"	      }\n" + 
 			"      	]\n" + 
-			"  	}" + 
-			"";
+			"  	}";
 	public JsonElement MAIN_MENU = new JsonParser().parse(main_menu);
 	/*
 	 {
@@ -207,7 +206,7 @@ public class PredefinedResponse {
 	public final JsonElement BINANCE = new JsonParser().parse(binance);
 	/*
 	 {
-	  	"text": "Here's what can you do with your Cryptocompare",
+	  	"text": "Other Features",
 	  	"quick_replies":[
 	      {
 	        "content_type":"text",
@@ -679,4 +678,28 @@ public class PredefinedResponse {
 	 		"       }\n" + 
 	 		"	  }\n" + 
 	 		" 	}";
+	 /*
+	   {
+		"attachment":{
+		  "type":"image", 
+		  "payload":{
+		    "url":"https://api.coins.asia/v3/barcodes/%ref/", 
+		    "is_reusable":true
+		  }
+		}
+	  }
+	 */
+
+	public final String barcode = " {\n" + 
+			"		\"attachment\":{\n" + 
+			"		  \"type\":\"image\", \n" + 
+			"		  \"payload\":{\n" + 
+			"		    \"url\":\"https://api.coins.asia/v3/barcodes/%ref/\", \n" + 
+			"		    \"is_reusable\":true\n" + 
+			"		  }\n" + 
+			"		}\n" + 
+			"	  }";
 }
+
+
+

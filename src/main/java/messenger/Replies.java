@@ -42,6 +42,45 @@ public class Replies {
 		// binance.sell
 	}
 	
+	public void seven_eleven_enter() throws Exception {
+		JsonObject reply = new JsonObject();
+		reply.addProperty("text", "Enter your amount in PHP");
+		messenger_send.callSendAPI(this.sender_psid, reply);
+		
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "seven_eleven_enter");
+		update_state(state);
+	}
+	
+	public void seven_eleven_amount(String amount) throws Exception {
+		JsonObject response = coinsph.seven_eleven(amount);
+		JsonObject reply = new JsonObject();
+		if (response.get("error")!=null) {
+			reply.addProperty("text", response.get("error").getAsString());
+			
+		}else {
+			reply.addProperty("text", "Success! You will receive the ref no. at your email/phone number \n"
+					+ "Copy then paste in this chat the ref no. to recieve your barcode");
+		}
+		messenger_send.callSendAPI(this.sender_psid, reply);
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "seven_eleven_amount");
+		update_state(state);
+	}
+	
+	public void seven_eleven_barcode(String ref) throws Exception {
+		String reply_str = predefined.barcode.replaceAll("%ref", ref);
+		JsonObject other_reply = new JsonObject();
+		other_reply.addProperty("text", "Here is your Barcode. Present this to a local 7-11 counter. \n"
+				+ "Please be advised that the barcode is only valid after 1 hour after message/email sent");
+		messenger_send.callSendAPI(this.sender_psid, other_reply);
+		JsonElement reply = new JsonParser().parse(reply_str);
+		messenger_send.callSendAPI(this.sender_psid, reply);
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "seven_eleven_barcode");
+		update_state(state);
+	}
+	
 	public void php_to_btc_send(double percent) throws Exception {
 		JsonObject account = this.coinsph.check_balance();
 		Double source_amount = percent * account.get("peso_balance").getAsDouble();

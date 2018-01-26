@@ -82,11 +82,12 @@ public class Coinsph {
 	}
 	
 	public void payin_outlets() throws Exception {
-		String url = "https://coins.ph/d/api/payin-outlets/";
+		String url = "https://coins.ph/d/api/payin-outlet-categories/";
 		String body = "";
 		CoinsphSend send = new CoinsphSend();
 		
 		String response_data = send.get_request(url, body);
+		System.out.println(response_data);
 	}
 	private JsonObject get_rate() throws Exception {
 		String url = "https://quote.coins.ph/v1/markets/BTC-PHP";
@@ -159,9 +160,9 @@ public class Coinsph {
 		body.addProperty("source_amount", source_amount);
 		
 		JsonArray accounts = get_crypto_accounts();
-		String peso_id = accounts.get(1).getAsJsonObject().get("id").getAsString();
+		String peso_id = accounts.get(1).getAsJsonObject().get("id").getAsString(); // peso id
 		body.addProperty("source_account", peso_id);
-		String btc_id = accounts.get(0).getAsJsonObject().get("id").getAsString();
+		String btc_id = accounts.get(0).getAsJsonObject().get("id").getAsString();  // btc id
 		body.addProperty("target_account", btc_id);
 		
 		CoinsphSend send = new CoinsphSend();
@@ -186,6 +187,30 @@ public class Coinsph {
 		}
 
 		return data;
-		
 	}
+	
+	public JsonObject seven_eleven(String amount) throws Exception {
+		String url = "https://coins.ph/api/v2/buyorder";
+		JsonObject body = new JsonObject();
+		JsonArray accounts = get_crypto_accounts();
+		String peso_id = accounts.get(0).getAsJsonObject().get("id").getAsString();
+		body.addProperty("currency", "PHP");
+		body.addProperty("currency_amount", Double.parseDouble(amount));
+		body.addProperty("payment_method", "seven_connect_deposit");
+		body.addProperty("target_account_id", peso_id);
+		
+		CoinsphSend send = new CoinsphSend();
+		String response_data = send.post_request(url, body.toString());
+		
+		JsonObject response = new JsonParser().parse(response_data).getAsJsonObject();
+		JsonObject data = new JsonObject();
+		if(response.get("errors")!=null) {
+			data.addProperty("error",  response.getAsJsonArray("errors").get(0).getAsString());
+		}else {
+			data.addProperty("amount", amount);
+		}
+		return data;
+	}
+	
+	
 }

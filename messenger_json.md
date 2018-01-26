@@ -63,7 +63,7 @@
             {
                "title":"🔀 Transfer to Binance",
               "type":"postback",
-              "payload":"{'type':'coinsph', 'msg':'transefer_to_binance'}"
+              "payload":"{'type':'coinsph', 'msg':'transfer_to_binance'}"
             }
           ]
         },
@@ -82,6 +82,16 @@
               "payload":"{'type':'binance', 'msg':'trade_with_a_cryptocurrency'}"
             },
             {
+               "title":"Buy",
+              "type":"postback",
+              "payload":"{'type':'binance', 'msg':'buy'}"
+            },
+            {
+               "title":"Sell",
+              "type":"postback",
+              "payload":"{'type':'binance', 'msg':'sell'}"
+            },
+            {
                "title":"📚 Trade History",
               "type":"postback",
               "payload":"{'type':'binance', 'msg':'trade_history'}"
@@ -89,7 +99,7 @@
           ]
         },
         {
-          "title":"📈 Cryptocompare",
+          "title":"📈 Other",
           "type":"nested",
           "call_to_actions":[
             {
@@ -101,6 +111,11 @@
                "title":"⏰ Send me notif of a Crypto",
               "type":"postback",
               "payload":"{'type':'cryptocompare', 'msg':'notifications'}"
+            },
+            {
+               "title":"💸 Cash-in via 7-11 Barcode",
+              "type":"postback",
+              "payload":"{'type':'cryptocompare', 'msg':'seven_eleven'}"
             }
           ]
         }

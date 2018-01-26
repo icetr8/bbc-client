@@ -29,6 +29,8 @@ public class Main {
 		//coinsph.transfer("testing", "1");
 		//coinsph.php_to_btc(200.0);
 		//coinsph.btc_to_php(0.000001);
+		//coinsph.seven_eleven();
+		//coinsph.payin_outlets();
 		Binance binance = new Binance();
 		//binance.view_funds();
 		//binance.sell_market_order("BTCUSDT", "3000");
