@@ -37,7 +37,7 @@ public class Main {
 		Spark.staticFiles.location("/public");
         // Static files caching is disabled by default
         // staticFiles.expireTime(600L);
-		
+		get("/", (req, res) -> "Hello, I am using this for my pet feeder. If you love/own a puppy please leave.");
 		get("/secureHello", (req, res) -> "Hello Secure World");
 		get("/webhook", (request, response) -> {
 			Messenger messenger = new Messenger();

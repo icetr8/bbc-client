@@ -42,18 +42,29 @@ public class Replies {
 		// binance.sell
 	}
 	
-	public void php_to_btc_send(int percent) throws Exception {
-		// check balance
+	public void php_to_btc_send(double percent) throws Exception {
+		JsonObject account = this.coinsph.check_balance();
+		Double source_amount = percent * account.get("peso_balance").getAsDouble();
+		JsonObject data = this.coinsph.php_to_btc(source_amount);
 		
-		// send request
+		JsonObject reply = new JsonObject();
+		if ( data.get("error")!=null) {
+			reply.addProperty("text", "ERROR! " + data.get("error").getAsString());
+		}
+
+		reply.addProperty("text", "HOORAY! you've send "+data.get("source_amount").getAsString() +
+				" php or "+ data.get("target_amount").getAsString()+ " btc at a buy rate of " 
+				+ data.get("rate").getAsString() + " php");
+		messenger_send.callSendAPI(this.sender_psid, reply);
 		
-		// if error != null then execute
-		
-		// if error show error_message
-		
+		// if error show error_messag
+		if (data.get("error")!=null) {
+			php_to_btc();
+		}else {
 		JsonObject state = new JsonObject();
-		state.addProperty("state", "php_to_btc_send");
+		state.addProperty("state", "php_to_btc_success");
 		update_state(state);
+		}
 	}
 	
 	public void php_to_btc() throws Exception {
@@ -74,7 +85,7 @@ public class Replies {
 				"25% = " + twenty5 + "\n");
 		messenger_send.callSendAPI(this.sender_psid, reply);
 		
-		String json = this.predefined.btc_to_php;
+		String json = this.predefined.PHP_TO_BTC;
 		JsonElement reply1 = new JsonParser().parse(json);
 		messenger_send.callSendAPI(this.sender_psid, reply1);
 		
@@ -84,18 +95,28 @@ public class Replies {
 		
 	}
 	
-	public void btc_to_php_send(int percent) throws Exception {
-		// check balance
+	public void btc_to_php_send(double percent) throws Exception {
+		JsonObject account = this.coinsph.check_balance();
+		Double source_amount = percent * account.get("btc_balance").getAsDouble();
+		JsonObject data = this.coinsph.btc_to_php(source_amount);
 		
-		// send request
-				
-		// if error != null then execute
+		JsonObject reply = new JsonObject();
+		if ( data.get("error")!=null) {
+			reply.addProperty("text", "ERROR! " + data.get("error").getAsString());
+		}
+		reply.addProperty("text", "HOORAY! you've send "+data.get("source_amount").getAsString() +
+				" btc or "+ data.get("target_amount").getAsString()+ " php at a sell rate of " 
+				+ data.get("rate").getAsString() + " php");
+		messenger_send.callSendAPI(this.sender_psid, reply);
 				
 		// if error show error_messag
-		
+		if (data.get("error")!=null) {
+			btc_to_php();
+		}else {
 		JsonObject state = new JsonObject();
-		state.addProperty("state", "btc_to_php_send");
+		state.addProperty("state", "btc_to_php_success");
 		update_state(state);
+		}
 	}
 	
 	public void btc_to_php() throws Exception {
@@ -104,7 +125,7 @@ public class Replies {
 		double bal = data.get("btc_balance").getAsDouble();
 		
 		NumberFormat formatter = new DecimalFormat("#0.00000000");  
-		String balance = Double.toString(bal);
+		String balance = formatter.format(bal);
 		String seventy5 = formatter.format(bal * 0.75);
 		String fifty = formatter.format(bal * 0.5);
 		String twenty5 = formatter.format(bal * 0.25);
@@ -126,28 +147,54 @@ public class Replies {
 		
 	}
 	
-	public void load_number() throws Exception {
-		
-		JsonObject reply = new JsonObject();
-		reply.addProperty("text", "Please enter the 11 digit number starting with +63");
-		this.messenger_send.callSendAPI(this.sender_psid, reply);
-		
+	public void load_number(String number) throws Exception {
 		JsonObject state = new JsonObject();
-		state.addProperty("state", "load_number");
-		update_state(state);
+		if(number == null) {
+			JsonObject reply = new JsonObject();
+			reply.addProperty("text", "Please enter the 11 digit number starting with +63");
+			this.messenger_send.callSendAPI(this.sender_psid, reply);
+			state.addProperty("state", "load_number");
+			update_state(state);
+		}else {
+			
+			state.addProperty("state", "load_number");
+			state.addProperty("load_number", number);
+			update_state(state);
+			
+			load_amount(number);
+			
+			
+		}
 	}
 	
-	public void load_amount() throws Exception {
+	public void load_amount(String number) throws Exception {
 		
 		String load_str = this.predefined.load;
 		// add values base on balance
-		String load = load_str.replaceAll("%balance", "10Milliion");
-		JsonElement reply = new JsonParser().parse(load);
+		String balance = this.coinsph.check_balance().get("peso_balance").getAsString();
+		String load = load_str.replaceAll("%balance", balance);
+		String the_string = load.replaceAll("%number", number);
+		JsonElement reply = new JsonParser().parse(the_string);
 		MessengerSend messenger_send = new MessengerSend();
 		messenger_send.callSendAPI(this.sender_psid, reply);
 		
 		JsonObject state = new JsonObject();
 		state.addProperty("state", "load_amount");
+		update_state(state);
+	}
+	
+	public void load_proceed(String number, String amount) throws Exception {
+		JsonObject response = this.coinsph.load(number, amount);
+		JsonObject reply = new JsonObject();
+		if(response.get("error")!= null) {
+			reply.addProperty("text", "ERROR! " + response.get("error").getAsString());
+		}else {
+			reply.addProperty("text", "Success I've recieved your payment. Your load will be credited to " 
+					+number +" within 10 minutes. Your rebate will arrrive in your Coins wallet");
+		}
+		messenger_send.callSendAPI(this.sender_psid, reply);
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "load_success");
 		update_state(state);
 	}
 	
@@ -171,13 +218,8 @@ public class Replies {
 	
 	public void transfer_to_binance() throws Exception {
 		// add values base on balance
-		String s1 = this.predefined.btc_to_php.replaceAll("%100", "100");
-		String s2 = s1.replaceAll("%75", "75");
-		String s3 = s2.replaceAll("%50", "50");
-		String s4 = s3.replaceAll("%25", "25");
-		String s5 = s4.replaceAll("%php", "10M");
-		String s6 = s5.replaceAll("%btc", "25btc");
-		JsonElement reply = new JsonParser().parse(s6);
+		String str = this.predefined.btc_to_php;
+		JsonElement reply = new JsonParser().parse(str);
 
 		MessengerSend messenger_send = new MessengerSend();
 		messenger_send.callSendAPI(this.sender_psid, reply);
@@ -218,15 +260,6 @@ public class Replies {
 		JsonObject state = new JsonObject();
 		state.addProperty("state", "funds");
 		update_state(state);
-	}
-	
-	private void update_state(JsonObject state) throws Exception {
-		JsonObject data = new JsonObject();
-		data.addProperty("state", state.get("state").getAsString());
-		if (state.get("load_number")!= null ) {
-		data.addProperty("load_number", state.get("load_number").getAsString());
-		}
-		Utils.raw_post_request(Settings.MESSENGER_STATE_DB+this.sender_psid, data.toString());
 	}
 	
 	public void main_menu_replies() throws Exception {
@@ -270,5 +303,14 @@ public class Replies {
 		state.addProperty("state", "main_menu_replies");
 		update_state(state);
 		
+	}
+	
+	private void update_state(JsonObject state) throws Exception {
+		JsonObject data = new JsonObject();
+		data.addProperty("state", state.get("state").getAsString());
+		if (state.get("load_number")!= null ) {
+		data.addProperty("load_number", state.get("load_number").getAsString());
+		}
+		Utils.raw_post_request(Settings.MESSENGER_STATE_DB+this.sender_psid, data.toString());
 	}
 }

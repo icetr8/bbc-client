@@ -25,7 +25,6 @@ public class HandleMessageEntry {
 			return;
 		}
 		String msg = payload.get("msg").getAsString();
-		
 		if (type.equalsIgnoreCase("main_menu")) {
 			switch(msg) {
 			 case "get_started": replies.get_started(payload); 
@@ -33,9 +32,8 @@ public class HandleMessageEntry {
 			default : System.out.println("Unrecognized msg"+msg+" with type of "+"type");;
 			}
 		}else if (type.equalsIgnoreCase("coinsph")) {
-			System.out.println(msg);
 			if (msg.equalsIgnoreCase("load")) {
-				replies.load_number();
+				replies.load_number(null);
 			}else if(msg.equalsIgnoreCase("balance")) {
 				replies.coinsph_balance();
 			}else if(msg.equalsIgnoreCase("php_to_btc")) {
@@ -73,38 +71,42 @@ public class HandleMessageEntry {
 			}else if(msg.equalsIgnoreCase("notifications")) {
 				replies.main_menu_replies();
 			}
-		}else if (type.equalsIgnoreCase("coinsph_php_to_btc")) {
+		}else if (type.equalsIgnoreCase("coinsph_php_to_btc") && get_state().get("messenger_state").getAsString().equalsIgnoreCase("php_btc") ) {
 			if (msg.equalsIgnoreCase("100")) {
-				replies.php_to_btc_send(100);
+				replies.php_to_btc_send(1);
 			}else if (msg.equalsIgnoreCase("75")) {
-				replies.php_to_btc_send(75);
+				replies.php_to_btc_send(0.75);
 			}else if (msg.equalsIgnoreCase("50")) {
-				replies.php_to_btc_send(50);
+				replies.php_to_btc_send(0.50);
 			}else if (msg.equalsIgnoreCase("25")) {
-				replies.php_to_btc_send(25);
+				replies.php_to_btc_send(0.25);
 			}
-		}else if (type.equalsIgnoreCase("coinsph_btc_to_php")) {
+		}else if (type.equalsIgnoreCase("coinsph_btc_to_php") && get_state().get("messenger_state").getAsString().equalsIgnoreCase("btc_php")) {
 			if (msg.equalsIgnoreCase("100")) {
-				replies.btc_to_php_send(100);
+				replies.btc_to_php_send(1);
 			}else if (msg.equalsIgnoreCase("75")) {
-				replies.btc_to_php_send(75);
+				replies.btc_to_php_send(0.75);
 			}else if (msg.equalsIgnoreCase("50")) {
-				replies.btc_to_php_send(50);
+				replies.btc_to_php_send(0.50);
 			}else if (msg.equalsIgnoreCase("25")) {
-				replies.btc_to_php_send(25);
+				replies.btc_to_php_send(0.25);
 			}
+		}else {
+			MessengerSend messenger_send = new MessengerSend();
+			JsonObject reply = new JsonObject();
+			reply.addProperty("text", "Oops! Sorry previous transactions are expired");
+			messenger_send.callSendAPI(this.sender_psid, reply);
 		}
 		
 	}
 	private void handle_quick_reply(JsonElement quick_reply) throws Exception {
 		Replies replies = new Replies(this.sender_psid);
-		//System.out.println(quick_reply.toString());
 		JsonObject obj = (JsonObject) quick_reply;
 		String s = obj.get("payload").getAsString();
 		String payload_str = obj.toString();
-		System.out.println(s);
 		JsonObject payload = fix_payload(s);
 		String type = payload.get("type").getAsString();
+		System.out.println(s);
 		if ( payload.get("msg")==null) {
 			return;
 		}
@@ -138,6 +140,33 @@ public class HandleMessageEntry {
 				break;
 			default : System.out.println("Unrecognized msg"+msg+" with type of "+type);;
 			}
+		}else if (type.equalsIgnoreCase("coinsph_load")) {
+			String number = this.get_state().get("messenger_to_load_number").getAsString();
+			switch(msg) {
+			case "10": replies.load_proceed(number, "10");  
+				break;
+			case "15": replies.load_proceed(number, "15");  
+				break;
+			case "20": replies.load_proceed(number, "20");
+				break;
+			case "25": replies.load_proceed(number, "25");  
+				break;
+			case "30": replies.load_proceed(number, "30");
+				break;
+			case "50": replies.load_proceed(number, "50");  
+				break;
+			case "70": replies.load_proceed(number, "70");  
+				break;
+			case "100": replies.load_proceed(number, "100");  
+				break;
+			case "300": replies.load_proceed(number, "300");
+				break;
+			case "500": replies.load_proceed(number, "500");  
+				break;
+			case "1000": replies.load_proceed(number, "1000");  
+				break;
+			default : System.out.println("Unrecognized msg"+msg+" with type of "+type);;
+			}
 		}
 	}
 
@@ -149,7 +178,8 @@ public class HandleMessageEntry {
 				handle_quick_reply(received_message.get("quick_reply"));
 			}else {
 				Replies replies = new Replies(this.sender_psid);
-				if (received_message.get("text").getAsString().toLowerCase().equals("menu")) {
+				String text = received_message.get("text").getAsString();
+				if (text.toLowerCase().equals("menu")) {
 					
 					replies.main_menu_replies();
 				}else {
@@ -157,7 +187,7 @@ public class HandleMessageEntry {
 					MessengerSend messenger_send = new MessengerSend();
 					
 					if ( state.equalsIgnoreCase("load_number")) {
-						replies.load_amount();
+						replies.load_number(text);
 					}else {
 					reply.addProperty("text",
 							"You sent the message: " + received_message.get("text") + ". Now send me an image!");				
@@ -170,7 +200,6 @@ public class HandleMessageEntry {
 		}
 	}
 
-	
 	private JsonObject get_state() throws Exception {
 		JsonObject state = new JsonObject();
 		String url = Settings.MESSENGER_STATE_DB + this.sender_psid;
@@ -183,9 +212,7 @@ public class HandleMessageEntry {
 		private JsonObject fix_payload(String payload_str) {
 			String str = payload_str;
 		    String _str_ = str.replaceAll("'", "\"");
-		    //System.out.println(_str_);
 		    JsonObject _payload_obj = (JsonObject) new JsonParser().parse(_str_);
-			//JsonObject payload_obj = (JsonObject) _payload_obj.get("payload");
 		    return _payload_obj;
 		}
 }

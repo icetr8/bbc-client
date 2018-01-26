@@ -379,7 +379,7 @@ public class PredefinedResponse {
 			"  	}";
 	/*
 	 {
-	  	"text": "Great! You have %balance PHP in your wallet. Please choose an amount.",
+	  	"text": "Great! You have %balance PHP in your wallet. Please choose an amount. (By Choosing an amount, will load the number %number)",
 	  	"quick_replies":[
 	      {
 	        "content_type":"text",
@@ -440,7 +440,7 @@ public class PredefinedResponse {
 	 }
 	 */
 	public String load = "{\n" + 
-			"	  	\"text\": \"Great! You have %balance PHP in your wallet. Please choose an amount.\",\n" + 
+			"	  	\"text\": \"Great! You have %balance PHP in your wallet. Please choose an amount. (By Choosing an amount, will load the number %number)\",\n" + 
 			"	  	\"quick_replies\":[\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 
@@ -515,72 +515,67 @@ public class PredefinedResponse {
        "template_type": "generic",
        "elements": [{
            "title": "Select a percentage of Transfer",
-           "subtitle":"You're total balance is %php php & %btc btc",
            "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
            "buttons": [ {
                "type":"postback",
-               "title":"100% == %100 php",
-               "payload":"{'type':'coinsph_btc_to_php', 'msg':'100%'}"
+               "title":"100%",
+               "payload":"{'type':'coinsph_btc_to_php', 'msg':'100'}"
            },
            {
                "type": "postback",
-               "title": "75% == %75 php",
-				"payload":"{'type':'coinsph_btc_to_php', 'msg':'75%'}"
+               "title": "75%",
+				"payload":"{'type':'coinsph_btc_to_php', 'msg':'75'}"
            }]
          },
          {
            "title": "Select a percentage of Transfer",
-           "subtitle":"You're total balance is %php php & %btc btc",
            "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
            "buttons": [{
                "type": "postback",
-               "title": "50% == %50 php",
-               "payload":"{'type':'coinsph_btc_to_php', 'msg':'50%'}"
+               "title": "50%",
+               "payload":"{'type':'coinsph_btc_to_php', 'msg':'50'}"
            },
            {
                "type": "postback",
-               "title": "25% == %25 php",
-               "payload":"{'type':'coinsph_btc_to_php', 'msg':'25%'}"
+               "title": "25%",
+               "payload":"{'type':'coinsph_btc_to_php', 'msg':'25'}"
            }]
          }]
        }
 	  }
  	}
 	 */
-	public String transfer_to_binance = ""
-			+ "{\n" + 
+	public String transfer_to_binance = "{\n" + 
 			"   \"attachment\": {\n" + 
 			"     \"type\": \"template\",\n" + 
 			"     \"payload\": {\n" + 
 			"       \"template_type\": \"generic\",\n" + 
 			"       \"elements\": [{\n" + 
 			"           \"title\": \"Select a percentage of Transfer\",\n" + 
-			"           \"subtitle\":\"You're total balance is %php php & %btc btc\",\n" + 
 			"           \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png\",    \n" + 
 			"           \"buttons\": [ {\n" + 
 			"               \"type\":\"postback\",\n" + 
-			"               \"title\":\"100% == %100 php\",\n" + 
-			"               \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'100%'}\"\n" + 
+			"               \"title\":\"100%\",\n" + 
+			"               \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'100'}\"\n" + 
 			"           },\n" + 
 			"           {\n" + 
 			"               \"type\": \"postback\",\n" + 
-			"               \"title\": \"75% == %75 php\",\n" + 
-			"				\"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'75%'}\"\n" + 
+			"               \"title\": \"75%\",\n" + 
+			"				\"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'75'}\"\n" + 
 			"           }]\n" + 
 			"         },\n" + 
 			"         {\n" + 
 			"           \"title\": \"Select a percentage of Transfer\",\n" + 
-			"           \"subtitle\":\"You're total balance is %php php & %btc btc\",\n" + 
 			"           \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png\",    \n" + 
 			"           \"buttons\": [{\n" + 
 			"               \"type\": \"postback\",\n" + 
-			"               \"title\": \"50% == %50 php\",\n" + 
-			"               \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'50%'}\"\n" + 
+			"               \"title\": \"50%\",\n" + 
+			"               \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'50'}\"\n" + 
 			"           },\n" + 
 			"           {\n" + 
 			"               \"type\": \"postback\",\n" + 
-			"               \"title\": \"25% == %25 php\",\n" + 
-			"               \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'25%'}\"\n" + 
+			"               \"title\": \"25%\",\n" + 
+			"               \"payload\":\"{'type':'coinsph_btc_to_php', 'msg':'25'}\"\n" + 
 			"           }]\n" + 
 			"         }]\n" + 
 			"       }\n" + 

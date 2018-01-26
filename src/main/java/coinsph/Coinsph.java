@@ -13,11 +13,9 @@ import com.google.gson.JsonParser;
 
 public class Coinsph {
 	public JsonObject check_balance() throws Exception{
-		String body = "";
-		String url = "https://coins.ph/api/v3/crypto-accounts/";
-		
 		JsonArray accounts = get_crypto_accounts();
 		JsonObject data = new JsonObject();
+		
 		String peso_balance = accounts.get(0).getAsJsonObject().get("balance").getAsString();
 		data.addProperty("peso_balance", peso_balance);
 		String btc_balance = accounts.get(1).getAsJsonObject().get("balance").getAsString();
@@ -54,7 +52,7 @@ public class Coinsph {
 		return message;
 	}
 
-	public String load(String number, String load_value) throws Exception {
+	public JsonObject load(String number, String load_value) throws Exception {
 		String url = "https://coins.ph/api/v2/sellorder";
 		JsonObject body = new JsonObject();
 		double load= Integer.parseInt(load_value != null ? load_value : "10");
@@ -71,13 +69,13 @@ public class Coinsph {
 		
 		JsonObject data = new JsonParser().parse(response_data).getAsJsonObject();
 		
-		String message = "";
+		JsonObject message = new JsonObject();
 		if(data.get("errors")!=null) {
-			message = data.getAsJsonArray("errors").get(0).getAsString();
+			message.addProperty("error", data.getAsJsonArray("errors").get(0).getAsString());
 		}else {
 			JsonObject order = data.get("order").getAsJsonObject();
 			String amount = order.get("amount").getAsString();
-			message = "You have succesfully load " + amount + " php";
+			message.addProperty("amount", amount);
 		}
 
 		return message; 
