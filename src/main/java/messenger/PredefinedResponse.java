@@ -699,7 +699,69 @@ public class PredefinedResponse {
 			"		  }\n" + 
 			"		}\n" + 
 			"	  }";
+	/*
+	 {
+    	"text": "Select a Base Cryptocurrency",
+    	"quick_replies":[
+	      {
+	        "content_type":"text",
+	        "title":"USDT",
+			"image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_.png",
+	        "payload":"{'type':'base_crypto', 'msg':'usdt'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"Bitcoin",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/binance.png",
+	        "payload":"{'type':'base_crypto', 'msg':'binance'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"Ethereum",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/cryptocompare.png",
+	        "payload":"{'type':'main_menu', 'msg':'Ethereum'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"Binance Coins",
+	        "image_url":"https://coinsbot-client.herokuapp.com/images/about.png",
+	        "payload":"{'type':'main_menu', 'msg':'binance'}"
+	      }
+      	]
+  	}
+	 */
+	public static final String base_crypto = "{\n" + 
+			"    	\"text\": \"Select a Base Cryptocurrency\",\n" + 
+			"    	\"quick_replies\":[\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"USDT\",\n" + 
+			"			\"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_.png\",\n" + 
+			"	        \"payload\":\"{'type':'base_crypto', 'msg':'usdt'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"Bitcoin\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/binance.png\",\n" + 
+			"	        \"payload\":\"{'type':'base_crypto', 'msg':'binance'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"Ethereum\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/cryptocompare.png\",\n" + 
+			"	        \"payload\":\"{'type':'main_menu', 'msg':'Ethereum'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"Binance Coins\",\n" + 
+			"	        \"image_url\":\"https://coinsbot-client.herokuapp.com/images/about.png\",\n" + 
+			"	        \"payload\":\"{'type':'main_menu', 'msg':'binance'}\"\n" + 
+			"	      }\n" + 
+			"      	]\n" + 
+			"  	}";
+	public static JsonElement BASE_CRYPTO = new JsonParser().parse(base_crypto);
 }
+
 
 
 

@@ -24,6 +24,10 @@ public class Settings {
 	public static String COINS_PH_API_KEY = "";
 	public static String COINS_PH_SECRET = "";
 	public static final String COINS_PH_URL = "https://coins.ph/api/v3/";
+	public static String usdt_pairs = "BIT"; // to do enter pairs
+	public static String bitcoin_pairs = "BIT";
+	public static String ethereum_pairs = "";
+	public static String binance_pairs = "";
 	
 	//binance
 	public static BinanceApiRestClient client;

@@ -27,14 +27,24 @@ public class Replies {
 		this.coinsph = new Coinsph();
 		
 	}
-	public void buy_market_order_symbol() {
-		// save symbol
+	public void buy_market_order_symbol(String base_crypto) throws Exception {
+		JsonObject reply = new JsonObject();
+		reply.addProperty("text", "Choose and Type Crypto symbol you want to trade with "+ base_crypto.toUpperCase());
+		messenger_send.callSendAPI(this.sender_psid, reply);
 	}
 	public void buy_market_order(String Symbol, String amount) {
 		// binance.buy
 	}
+	public void buy_market_order_base() throws Exception {
+		JsonElement reply = PredefinedResponse.BASE_CRYPTO;
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "buy_market_order_base");
+		update_state(state);
+	}
 	
-	public void sell_market_order_symbol() {
+	public void sell_market_order_symbol(String base_crypto) {
 		// save symbol
 	}
 	

@@ -70,7 +70,7 @@ public class Binance {
 	public void trade_history() throws Exception {
 		
 	}
-	public void sell_market_order(String symbol, String quantity ) throws Exception {
+	public void sell_market_order(String trade_pair, String quantity ) throws Exception {
 		
 		Settings settings = new Settings();
 		 BinanceApiRestClient client = settings.client;
@@ -78,20 +78,20 @@ public class Binance {
 		
 		if (test==true) {
 			//test orders
-			NewOrder order = marketBuy(symbol, quantity);
+			NewOrder order = marketBuy(trade_pair, quantity);
 			client.newOrderTest(order);
 			// insert balance is sufficient
 		}
 		else {
 			//real orders
 			ExchangeInfo exchangeInfo = client.getExchangeInfo();
-		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo("TRXBTC");
+		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo(trade_pair);
 			SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.PRICE_FILTER);
 			System.out.println(priceFilter.getMinPrice());
 		    System.out.println(priceFilter.getTickSize());
 		}
 	}
-	public void buy_market_order(String symbol, String quantity) throws Exception {
+	public void buy_market_order(String trade_pair, String quantity) throws Exception {
 		Settings settings = new Settings();
 		 BinanceApiRestClient client = settings.client;
 		boolean test = false; //settings.binance_test_order;
@@ -100,20 +100,20 @@ public class Binance {
 			//test orders
 			
 			ExchangeInfo exchangeInfo = client.getExchangeInfo();
-		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo("TRXBTC");
+		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo(trade_pair);
 			SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.PRICE_FILTER);
 			System.out.println(priceFilter.getMinPrice());
 		    System.out.println(priceFilter.getTickSize());
 		    
 		    // amount > getminprice then proceed if not show min price error
-			NewOrder order = marketBuy(symbol, quantity);
+			NewOrder order = marketBuy(trade_pair, quantity);
 			client.newOrderTest(order);
 			// insert balance is sufficient
 		}
 		else {
 			//real orders
 			ExchangeInfo exchangeInfo = client.getExchangeInfo();
-		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo("TRXBTC");
+		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo(trade_pair);
 			SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.PRICE_FILTER);
 			System.out.println(priceFilter.getMinPrice());
 		    System.out.println(priceFilter.getTickSize());

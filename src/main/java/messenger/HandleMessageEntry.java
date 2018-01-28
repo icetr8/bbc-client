@@ -53,7 +53,7 @@ public class HandleMessageEntry {
 			}else if(msg.equalsIgnoreCase("trade_history")) {
 				replies.main_menu_replies();
 			}else if(msg.equalsIgnoreCase("buy")) {
-				replies.main_menu_replies();
+				replies.buy_market_order_base();
 			}else if(msg.equalsIgnoreCase("sell")) {
 				replies.main_menu_replies();
 			}
@@ -163,6 +163,16 @@ public class HandleMessageEntry {
 				break;
 			default : System.out.println("Unrecognized msg"+msg+" with type of "+type);;
 			}
+		}else if (type.equalsIgnoreCase("base_crypto") && get_state().get("messenger_state").getAsString().equalsIgnoreCase("buy_market_order_base")) {
+			if (msg.equalsIgnoreCase("usdt")) 
+				replies.buy_market_order_symbol("usdt");
+			else if (msg.equalsIgnoreCase("bitcoin")) 
+				replies.buy_market_order_symbol("bitcoin");
+			else if (msg.equalsIgnoreCase("ethereum"))
+				replies.buy_market_order_symbol("ethereum");
+			else if (msg.equalsIgnoreCase("binance"))
+				replies.buy_market_order_symbol("binance");
+			
 		}
 	}
 
