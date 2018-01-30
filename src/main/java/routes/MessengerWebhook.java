@@ -7,8 +7,6 @@ import static spark.Spark.post;
 
 import java.util.Map;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import com.google.gson.JsonObject;
 
 import configuration.Settings;

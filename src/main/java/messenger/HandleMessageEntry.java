@@ -213,7 +213,14 @@ public class HandleMessageEntry {
 
 	private JsonObject get_state() throws Exception {
 		JsonObject state = new JsonObject();
-		String url = Settings.MESSENGER_STATE_DB + this.sender_psid;
+		ProcessBuilder processBuilder = new ProcessBuilder();
+		String url;
+		if (processBuilder.environment().get("PORT") != null) {
+			url = Settings.MESSENGER_STATE_DB_HEROKU + this.sender_psid;
+		}else {
+			url = Settings.MESSENGER_STATE_DB + this.sender_psid;
+		}
+		
 		state= Utils.raw_get_request(url).getAsJsonObject();
 		return state;
 		

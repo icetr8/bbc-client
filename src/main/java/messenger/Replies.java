@@ -360,6 +360,12 @@ public class Replies {
 		if (state.get("load_number")!= null ) {
 		data.addProperty("load_number", state.get("load_number").getAsString());
 		}
-		Utils.raw_post_request(Settings.MESSENGER_STATE_DB+this.sender_psid, data.toString());
+		ProcessBuilder processBuilder = new ProcessBuilder();
+		if (processBuilder.environment().get("PORT") != null) {
+			Utils.raw_post_request(Settings.MESSENGER_STATE_DB_HEROKU+this.sender_psid, data.toString());
+		}else {
+			Utils.raw_post_request(Settings.MESSENGER_STATE_DB+this.sender_psid, data.toString());
+		}
+		
 	}
 }
