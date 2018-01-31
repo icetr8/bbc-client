@@ -439,7 +439,7 @@ public class PredefinedResponse {
 	 }
 	 */
 	public String load = "{\n" + 
-			"	  	\"text\": \"Great! You have %balance PHP in your wallet. Please choose an amount. (By Choosing an amount, will load the number %number)\",\n" + 
+			"	  	\"text\": \"Great! You have %balance PHP in your wallet. Please choose an amount. (By Choosing an amount, will load the number )\",\n" + 
 			"	  	\"quick_replies\":[\n" + 
 			"	      {\n" + 
 			"	        \"content_type\":\"text\",\n" + 

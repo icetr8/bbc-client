@@ -178,7 +178,7 @@ public class HandleMessageEntry {
 
 	void handleMessage(JsonObject received_message) throws Exception {
 		JsonObject reply = new JsonObject();
-		
+		System.out.println(received_message.get("text"));
 		if (received_message.get("text") != null) {
 			if (received_message.get("quick_reply") != null) {
 				handle_quick_reply(received_message.get("quick_reply"));

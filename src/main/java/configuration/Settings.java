@@ -20,7 +20,7 @@ public class Settings {
 	public static final int PORT = 4567;
 	public static final String MESSENGER_SEND_URL = "https://graph.facebook.com/v2.6/me/messages?access_token=";
 	public static final String MESSENGER_STATE_DB = "http://localhost:8000/messenger/state?psid=";
-	public static final String MESSENGER_STATE_DB_HEROKU = "http://kalakal.herokuapp.com/messenger/state?psid";
+	public static final String MESSENGER_STATE_DB_HEROKU = "http://kalakal.herokuapp.com/messenger/state?psid=";
 	// Coins.ph
 	public static String COINS_PH_API_KEY = "";
 	public static String COINS_PH_SECRET = "";

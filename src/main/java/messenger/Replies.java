@@ -222,8 +222,8 @@ public class Replies {
 		// add values base on balance
 		String balance = this.coinsph.check_balance().get("peso_balance").getAsString();
 		String load = load_str.replaceAll("%balance", balance);
-		String the_string = load.replaceAll("%number", number);
-		JsonElement reply = new JsonParser().parse(the_string);
+		//String the_string = load.replaceAll("%number", number);
+		JsonElement reply = new JsonParser().parse(load);
 		MessengerSend messenger_send = new MessengerSend();
 		messenger_send.callSendAPI(this.sender_psid, reply);
 		
