@@ -13,7 +13,7 @@ import com.google.gson.JsonParser;
 
 import binance.Binance;
 import configuration.Settings;
-
+import messenger.Custom;
 import messenger.Messenger;
 import spark.Spark;
 import coinsph.Coinsph;
@@ -34,6 +34,8 @@ public class Main {
 		Binance binance = new Binance();
 		//binance.view_funds();
 		//binance.sell_market_order("BTCUSDT", "3000");
+		//binance.user_data_stream();
+		//binance.market_data_stream();
 		port(getHerokuAssignedPort());
 		
 		Spark.staticFiles.location("/public");
@@ -50,6 +52,11 @@ public class Main {
 			Messenger messenger = new Messenger();
 			String res = messenger.event_reciever(request, response);
 			return res;
+		});
+		post("/custom", (request, response) -> {
+			Custom custom = new Custom();
+			custom.handler(request, response);
+			return "OK";
 		});
 	}
 	
