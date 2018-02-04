@@ -15,9 +15,9 @@ public class Custom {
 		String sender_psid = data.get("sender_psid").getAsString();
 		String percentage = data.get("percentage").getAsString();
 		String base_value = data.get("base_value").getAsString();
-		String target_value = data.get("base_value").getAsString();
+		String target_value = data.get("target_value").getAsString();
 		
-		String reply = String.format("The trade pair \"%s\" moved %s. From %s to %s",
+		String reply = String.format("The trade pair \"%s\" moved %s%. From %s to %s",
 				symbol, percentage, base_value, target_value);
 		MessengerSend messenger_send = new MessengerSend();
 		JsonObject message = new JsonObject();

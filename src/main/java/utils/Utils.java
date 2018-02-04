@@ -41,7 +41,7 @@ public class Utils {
 		CloseableHttpResponse response = client.execute(httpPost);
 		String responseAsString = EntityUtils.toString(response.getEntity());
 		//System.out.println(responseAsString);
-		//System.out.println(response.getStatusLine() + "  in SENDING");
+		System.out.println(response.getStatusLine() + "  in SENDING");
 		client.close();
 		return responseAsString;
 	}
