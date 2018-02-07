@@ -34,6 +34,21 @@ import static com.binance.api.client.domain.account.NewOrder.marketBuy;
 import static com.binance.api.client.domain.account.NewOrder.limitBuy;
 
 public class Binance {
+	public JsonObject symbol_statistics (String symbol) throws Exception {
+		Settings settings = new Settings();
+		BinanceApiRestClient client =settings.client;
+		JsonObject data = new JsonObject();
+	    try {
+	    	TickerStatistics tickerStatistics = client.get24HrPriceStatistics(symbol);
+			data.addProperty("last_price", tickerStatistics.getLastPrice());
+	     } catch (BinanceApiException e) {
+	       System.out.println(e.getError().getCode()); // -1121
+	       System.out.println(e.getError().getMsg());
+	       data.addProperty("error", e.getError().getMsg() );
+	     }
+		
+		return data;
+	}
 	public JsonObject view_funds() throws Exception {
 		Settings settings = new Settings();
 		BinanceApiRestClient client =settings.client;

@@ -51,7 +51,48 @@ public class Replies {
 	public void sell_market_order(String Symbol, String amount) {
 		// binance.sell
 	}
-	
+	public void notification_proceed(String notification_type, String notification_interval, String target_value) {
+		System.out.println(target_value);
+	}
+	public void notification_target_value ( String symbol) throws Exception{
+		JsonObject response = binance.symbol_statistics(symbol.toUpperCase());
+		JsonObject reply = new JsonObject();
+		if (response.get("error")!=null) {
+			reply.addProperty("text", response.get("error").getAsString());
+			messenger_send.callSendAPI(this.sender_psid, reply);
+			reply.addProperty("text", "Enter a VALID Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
+			messenger_send.callSendAPI(this.sender_psid, reply);
+			return;
+		}
+		String last_price = response.get("last_price").getAsString();
+		reply.addProperty("text", "Entering a value that is LOWER means notifying you when the price hits LOWER than the entered value \n\n"+
+				"Entering a value that is HIGHER means notifying you when the price hits HIGHER than the entered value");
+		messenger_send.callSendAPI(this.sender_psid, reply);
+		String message = String.format(("The last price is %s, enter a price that is higher or lower"), last_price);
+		reply.addProperty("text", message);
+		messenger_send.callSendAPI(this.sender_psid, reply);
+		
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "notification_target_value");
+		update_state(state);
+	}
+	public void notification_trade_pair(String interval) throws Exception {
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "notification_trade_pair");
+		update_state(state);
+		
+		JsonObject reply = new JsonObject();
+		reply.addProperty("text", "Enter a Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
+		messenger_send.callSendAPI(this.sender_psid, reply);
+	}
+	public void notification_type(String notification_type) throws Exception {
+		JsonElement reply = PredefinedResponse.NOTIFICATION_TYPE;
+		messenger_send.callSendAPI(this.sender_psid, reply);
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "notification_type");
+		state.addProperty("notification_type", notification_type);
+		update_state(state);
+	}
 	public void seven_eleven_enter() throws Exception {
 		JsonObject reply = new JsonObject();
 		reply.addProperty("text", "Enter your amount in PHP");
@@ -355,16 +396,16 @@ public class Replies {
 	}
 	
 	private void update_state(JsonObject state) throws Exception {
-		JsonObject data = new JsonObject();
-		data.addProperty("state", state.get("state").getAsString());
-		if (state.get("load_number")!= null ) {
-		data.addProperty("load_number", state.get("load_number").getAsString());
-		}
+		//JsonObject data = new JsonObject();
+		//data.addProperty("state", state.get("state").getAsString());
+		//if (state.get("load_number")!= null ) {
+		//data.addProperty("load_number", state.get("load_number").getAsString());
+		//}
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		if (processBuilder.environment().get("PORT") != null) {
-			Utils.raw_post_request(Settings.MESSENGER_STATE_DB_HEROKU+this.sender_psid, data.toString());
+			Utils.raw_post_request(Settings.MESSENGER_STATE_DB_HEROKU+this.sender_psid, state.toString());
 		}else {
-			Utils.raw_post_request(Settings.MESSENGER_STATE_DB+this.sender_psid, data.toString());
+			Utils.raw_post_request(Settings.MESSENGER_STATE_DB+this.sender_psid, state.toString());
 		}
 		
 	}

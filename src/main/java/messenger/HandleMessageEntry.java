@@ -58,11 +58,13 @@ public class HandleMessageEntry {
 				replies.main_menu_replies();
 			}
 		}else if (type.equalsIgnoreCase("cryptocompare")) {
-			System.out.println(msg);
+			
 			if(msg.equalsIgnoreCase("select_a_cryptocurrency")) {
 				replies.main_menu_replies();
-			}else if(msg.equalsIgnoreCase("notifications")) {
-				replies.main_menu_replies();
+			}else if(msg.equalsIgnoreCase("notifications_one_time")) {
+				replies.notification_type("one_time");
+			}else if(msg.equalsIgnoreCase("notifications_non_stop")) {
+				replies.notification_type("non_stop");
 			}
 			else if(msg.equalsIgnoreCase("seven_eleven")) {
 				replies.seven_eleven_enter();
@@ -102,12 +104,12 @@ public class HandleMessageEntry {
 		String payload_str = obj.toString();
 		JsonObject payload = fix_payload(s);
 		String type = payload.get("type").getAsString();
-		System.out.println(s);
+		
 		if ( payload.get("msg")==null) {
 			return;
 		}
 		String msg = payload.get("msg").getAsString();
-		
+		String state = get_state().get("messenger_state").getAsString();
 		if (type.equalsIgnoreCase("main_menu")) {
 			switch(msg) {
 			case "coins.ph": replies.coinsph_replies();  
@@ -138,47 +140,23 @@ public class HandleMessageEntry {
 			}
 		}else if (type.equalsIgnoreCase("coinsph_load")) {
 			String number = this.get_state().get("messenger_to_load_number").getAsString();
-			switch(msg) {
-			case "10": replies.load_proceed(number, "10");  
-				break;
-			case "15": replies.load_proceed(number, "15");  
-				break;
-			case "20": replies.load_proceed(number, "20");
-				break;
-			case "25": replies.load_proceed(number, "25");  
-				break;
-			case "30": replies.load_proceed(number, "30");
-				break;
-			case "50": replies.load_proceed(number, "50");  
-				break;
-			case "70": replies.load_proceed(number, "70");  
-				break;
-			case "100": replies.load_proceed(number, "100");  
-				break;
-			case "300": replies.load_proceed(number, "300");
-				break;
-			case "500": replies.load_proceed(number, "500");  
-				break;
-			case "1000": replies.load_proceed(number, "1000");  
-				break;
-			default : System.out.println("Unrecognized msg"+msg+" with type of "+type);;
-			}
-		}else if (type.equalsIgnoreCase("base_crypto") && get_state().get("messenger_state").getAsString().equalsIgnoreCase("buy_market_order_base")) {
-			if (msg.equalsIgnoreCase("usdt")) 
-				replies.buy_market_order_symbol("usdt");
-			else if (msg.equalsIgnoreCase("bitcoin")) 
-				replies.buy_market_order_symbol("bitcoin");
-			else if (msg.equalsIgnoreCase("ethereum"))
-				replies.buy_market_order_symbol("ethereum");
-			else if (msg.equalsIgnoreCase("binance"))
-				replies.buy_market_order_symbol("binance");
+			
+			replies.load_proceed(number, msg);  
+			
+		}else if (type.equalsIgnoreCase("base_crypto") && get_state().get("messenger_state").getAsString().equalsIgnoreCase("buy_market_order_base")) {		
+			
+			replies.buy_market_order_symbol("usdt");
+			
+		}else if (type.equalsIgnoreCase("notifications_type") && state.equalsIgnoreCase("notification_type")) {
+			
+			replies.notification_trade_pair(msg);
 			
 		}
 	}
 
 	void handleMessage(JsonObject received_message) throws Exception {
 		JsonObject reply = new JsonObject();
-		System.out.println(received_message.get("text"));
+
 		if (received_message.get("text") != null) {
 			if (received_message.get("quick_reply") != null) {
 				handle_quick_reply(received_message.get("quick_reply"));
@@ -192,13 +170,21 @@ public class HandleMessageEntry {
 					String state = this.state.get("messenger_state").getAsString();
 					MessengerSend messenger_send = new MessengerSend();
 					
-					if ( state.equalsIgnoreCase("load_number")) {
+					if ( state.equalsIgnoreCase("load_number"))
 						replies.load_number(text);
-					}else if ( state.equalsIgnoreCase("seven_eleven_enter")) {
+					else if ( state.equalsIgnoreCase("seven_eleven_enter"))
 						replies.seven_eleven_amount(text);
-					}else if (text.length() ==14){
+					else if (text.length() ==14){
 						replies.seven_eleven_barcode(text);
-					}else 
+					}else if (state.equalsIgnoreCase("notification_trade_pair"))
+						replies.notification_target_value( text);
+					else if (state.equalsIgnoreCase("notification_target_value")) {
+						String notification_type = get_state().get("messenger_notification_type").getAsString();
+						String notification_interval = get_state().get("messenger_notification_interval").getAsString();
+						String notification_base_value = get_state().get("messenger_notification_base_value").getAsString();
+						replies.notification_proceed(notification_type, notification_interval, text);
+						
+					}else
 					{
 						reply.addProperty("text",
 								"You sent the message: " + received_message.get("text") + ". Now send me an image!");				

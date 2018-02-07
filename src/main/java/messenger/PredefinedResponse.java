@@ -760,6 +760,120 @@ public class PredefinedResponse {
 			"      	]\n" + 
 			"  	}";
 	public static JsonElement BASE_CRYPTO = new JsonParser().parse(base_crypto);
+	
+	/*
+	 {
+    	"text": "Select a CandleStick interval",
+    	"quick_replies":[
+	      {
+	        "content_type":"text",
+	        "title":"1 min",
+	        "payload":"{'type':'notifications_type', 'msg':'1_min'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"3 mins",
+	        "payload":"{'type':'notifications_type', 'msg':'THREE_MINUTES'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"5 mins",
+	        "payload":"{'type':'notifications_type', 'msg':'FIVE_MINUTES'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"15 mins",
+	        "payload":"{'type':'notifications_type', 'msg':'FIFTEEN_MINUTES'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"30 mins",
+	        "payload":"{'type':'notifications_type', 'msg':'HALF_HOURLY'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"1 hour",
+	        "payload":"{'type':'notifications_type', 'msg':'HOURLY'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"4 hours",
+	        "payload":"{'type':'notifications_type', 'msg':'FOUR_HOURLY'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"8 hours",
+	        "payload":"{'type':'notifications_type', 'msg':'EIGHT_HOURLY'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"12 hours",
+	        "payload":"{'type':'notifications_type', 'msg':'TWELVE_HOURLY'}"
+	      },
+	      {
+	        "content_type":"text",
+	        "title":"1 day",
+	        "payload":"{'type':'notifications_type', 'msg':'DAILY'}"
+	      }
+      	]
+  	}
+	 */
+	private static final String notifications_type= "{\n" + 
+			"    	\"text\": \"Select a CandleStick interval\",\n" + 
+			"    	\"quick_replies\":[\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"1 min\",\n" + 
+			"	        \"payload\":\"{'type':'notifications_type', 'msg':'1_min'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"3 mins\",\n" + 
+			"	        \"payload\":\"{'type':'notifications_type', 'msg':'THREE_MINUTES'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"5 mins\",\n" + 
+			"	        \"payload\":\"{'type':'notifications_type', 'msg':'FIVE_MINUTES'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"15 mins\",\n" + 
+			"	        \"payload\":\"{'type':'notifications_type', 'msg':'FIFTEEN_MINUTES'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"30 mins\",\n" + 
+			"	        \"payload\":\"{'type':'notifications_type', 'msg':'HALF_HOURLY'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"1 hour\",\n" + 
+			"	        \"payload\":\"{'type':'notifications_type', 'msg':'HOURLY'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"4 hours\",\n" + 
+			"	        \"payload\":\"{'type':'notifications_type', 'msg':'FOUR_HOURLY'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"8 hours\",\n" + 
+			"	        \"payload\":\"{'type':'notifications_type', 'msg':'EIGHT_HOURLY'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"12 hours\",\n" + 
+			"	        \"payload\":\"{'type':'notifications_type', 'msg':'TWELVE_HOURLY'}\"\n" + 
+			"	      },\n" + 
+			"	      {\n" + 
+			"	        \"content_type\":\"text\",\n" + 
+			"	        \"title\":\"1 day\",\n" + 
+			"	        \"payload\":\"{'type':'notifications_type', 'msg':'DAILY'}\"\n" + 
+			"	      }\n" + 
+			"      	]\n" + 
+			"  	}";
+	public static final JsonElement NOTIFICATION_TYPE = new JsonParser().parse(notifications_type);
 }
 
 

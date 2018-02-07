@@ -36,6 +36,7 @@ public class Main {
 		//binance.sell_market_order("BTCUSDT", "3000");
 		//binance.user_data_stream();
 		//binance.market_data_stream("1817289878344392", "ethbtc", 0.104528, 0.1045or0000 , 1, true);
+		//binance.symbol_statistics("ETABTC");
 		port(getHerokuAssignedPort());
 		
 		Spark.staticFiles.location("/public");
