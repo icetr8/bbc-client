@@ -53,9 +53,9 @@ public class HandleMessageEntry {
 			}else if(msg.equalsIgnoreCase("trade_history")) {
 				replies.main_menu_replies();
 			}else if(msg.equalsIgnoreCase("buy")) {
-				replies.buy_market_order_base();
+				replies.buy_market_order_pair();
 			}else if(msg.equalsIgnoreCase("sell")) {
-				replies.main_menu_replies();
+				replies.sell_market_order_pair();
 			}
 		}else if (type.equalsIgnoreCase("cryptocompare")) {
 			
@@ -143,10 +143,6 @@ public class HandleMessageEntry {
 			
 			replies.load_proceed(number, msg);  
 			
-		}else if (type.equalsIgnoreCase("base_crypto") && get_state().get("messenger_state").getAsString().equalsIgnoreCase("buy_market_order_base")) {		
-			
-			replies.buy_market_order_symbol("usdt");
-			
 		}else if (type.equalsIgnoreCase("notifications_type") && state.equalsIgnoreCase("notification_type")) {
 			
 			replies.notification_trade_pair(msg);
@@ -174,15 +170,20 @@ public class HandleMessageEntry {
 						replies.load_number(text);
 					else if ( state.equalsIgnoreCase("seven_eleven_enter"))
 						replies.seven_eleven_amount(text);
-					else if (text.length() ==14){
+					else if (text.length() ==14)
 						replies.seven_eleven_barcode(text);
-					}else if (state.equalsIgnoreCase("notification_trade_pair"))
+					else if (state.equalsIgnoreCase("notification_trade_pair"))
 						replies.notification_target_value( text);
+					else if (state.equalsIgnoreCase("buy_market_order_pair"))
+						replies.buy_market_order_amount(text);
+					else if (state.equalsIgnoreCase("sell_market_order_pair"))
+						replies.sell_market_order_amount(text);
 					else if (state.equalsIgnoreCase("notification_target_value")) {
 						String notification_type = get_state().get("messenger_notification_type").getAsString();
 						String notification_interval = get_state().get("messenger_notification_interval").getAsString();
 						String notification_base_value = get_state().get("messenger_notification_base_value").getAsString();
-						replies.notification_proceed(notification_type, notification_interval, text);
+						String notification_symbol = get_state().get("messenger_notification_symbol").getAsString();
+						replies.notification_proceed(notification_type, notification_interval,  notification_symbol, notification_base_value, text);
 						
 					}else
 					{

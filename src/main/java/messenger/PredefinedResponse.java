@@ -768,7 +768,7 @@ public class PredefinedResponse {
 	      {
 	        "content_type":"text",
 	        "title":"1 min",
-	        "payload":"{'type':'notifications_type', 'msg':'1_min'}"
+	        "payload":"{'type':'notifications_type', 'msg':'ONE_MINUTE'}"
 	      },
 	      {
 	        "content_type":"text",
@@ -874,6 +874,157 @@ public class PredefinedResponse {
 			"      	]\n" + 
 			"  	}";
 	public static final JsonElement NOTIFICATION_TYPE = new JsonParser().parse(notifications_type);
+	/*
+	 {
+  "attachment": {
+    "type": "template",
+    "payload": {
+      "template_type": "generic",
+      "elements": [{
+          "title": "Select a percentage of amount to buy",
+          "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
+          "buttons": [ {
+              "type":"postback",
+              "title":"100%",
+              "payload":"{'type':'binance_buy', 'msg':'100'}"
+          },
+          {
+              "type": "postback",
+              "title": "75%",
+				"payload":"{'type':'binance_buy', 'msg':'75'}"
+          }]
+        },
+        {
+          "title": "Select a percentage of amount to buy",
+          "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
+          "buttons": [{
+              "type": "postback",
+              "title": "50%",
+              "payload":"{'type':'binance_buy', 'msg':'50'}"
+          },
+          {
+              "type": "postback",
+              "title": "25%",
+              "payload":"{'type':'binance_buy', 'msg':'25'}"
+          }]
+        }]
+      }
+	  }
+	}
+	 */
+	private static String buy_market_order_amount = "{\n" + 
+			"  \"attachment\": {\n" + 
+			"    \"type\": \"template\",\n" + 
+			"    \"payload\": {\n" + 
+			"      \"template_type\": \"generic\",\n" + 
+			"      \"elements\": [{\n" + 
+			"          \"title\": \"Select a percentage of amount to buy\",\n" + 
+			"          \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png\",    \n" + 
+			"          \"buttons\": [ {\n" + 
+			"              \"type\":\"postback\",\n" + 
+			"              \"title\":\"100%\",\n" + 
+			"              \"payload\":\"{'type':'binance_buy', 'msg':'100'}\"\n" + 
+			"          },\n" + 
+			"          {\n" + 
+			"              \"type\": \"postback\",\n" + 
+			"              \"title\": \"75%\",\n" + 
+			"				\"payload\":\"{'type':'binance_buy', 'msg':'75'}\"\n" + 
+			"          }]\n" + 
+			"        },\n" + 
+			"        {\n" + 
+			"          \"title\": \"Select a percentage of amount to buy\",\n" + 
+			"          \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png\",    \n" + 
+			"          \"buttons\": [{\n" + 
+			"              \"type\": \"postback\",\n" + 
+			"              \"title\": \"50%\",\n" + 
+			"              \"payload\":\"{'type':'binance_buy', 'msg':'50'}\"\n" + 
+			"          },\n" + 
+			"          {\n" + 
+			"              \"type\": \"postback\",\n" + 
+			"              \"title\": \"25%\",\n" + 
+			"              \"payload\":\"{'type':'binance_buy', 'msg':'25'}\"\n" + 
+			"          }]\n" + 
+			"        }]\n" + 
+			"      }\n" + 
+			"	  }\n" + 
+			"	}";
+	public static final JsonElement BUY_MARKET_ORDER_AMOUNT= new JsonParser().parse(buy_market_order_amount);
+	
+	/*
+	 {
+ "attachment": {
+   "type": "template",
+   "payload": {
+     "template_type": "generic",
+     "elements": [{
+         "title": "Select a percentage of amount to sell",
+         "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
+         "buttons": [ {
+             "type":"postback",
+             "title":"100%",
+             "payload":"{'type':'binance_sell', 'msg':'100'}"
+         },
+         {
+             "type": "postback",
+             "title": "75%",
+				"payload":"{'type':'binance_sell', 'msg':'75'}"
+         }]
+       },
+       {
+         "title": "Select a percentage of amount to buy",
+         "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
+         "buttons": [{
+             "type": "postback",
+             "title": "50%",
+             "payload":"{'type':'binance_sell', 'msg':'50'}"
+         },
+         {
+             "type": "postback",
+             "title": "25%",
+             "payload":"{'type':'binance_sell', 'msg':'25'}"
+         }]
+       }]
+     }
+	  }
+	}
+	 */
+	private static String sell_market_order_amount = "{\n" + 
+			" \"attachment\": {\n" + 
+			"   \"type\": \"template\",\n" + 
+			"   \"payload\": {\n" + 
+			"     \"template_type\": \"generic\",\n" + 
+			"     \"elements\": [{\n" + 
+			"         \"title\": \"Select a percentage of amount to sell\",\n" + 
+			"         \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png\",    \n" + 
+			"         \"buttons\": [ {\n" + 
+			"             \"type\":\"postback\",\n" + 
+			"             \"title\":\"100%\",\n" + 
+			"             \"payload\":\"{'type':'binance_sell', 'msg':'100'}\"\n" + 
+			"         },\n" + 
+			"         {\n" + 
+			"             \"type\": \"postback\",\n" + 
+			"             \"title\": \"75%\",\n" + 
+			"				\"payload\":\"{'type':'binance_sell', 'msg':'75'}\"\n" + 
+			"         }]\n" + 
+			"       },\n" + 
+			"       {\n" + 
+			"         \"title\": \"Select a percentage of amount to buy\",\n" + 
+			"         \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png\",    \n" + 
+			"         \"buttons\": [{\n" + 
+			"             \"type\": \"postback\",\n" + 
+			"             \"title\": \"50%\",\n" + 
+			"             \"payload\":\"{'type':'binance_sell', 'msg':'50'}\"\n" + 
+			"         },\n" + 
+			"         {\n" + 
+			"             \"type\": \"postback\",\n" + 
+			"             \"title\": \"25%\",\n" + 
+			"             \"payload\":\"{'type':'binance_sell', 'msg':'25'}\"\n" + 
+			"         }]\n" + 
+			"       }]\n" + 
+			"     }\n" + 
+			"	  }\n" + 
+			"	}";
+	public static final JsonElement SELL_MARKET_ORDER_AMOUNT= new JsonParser().parse(sell_market_order_amount);
 }
 
 

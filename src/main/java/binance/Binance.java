@@ -102,6 +102,8 @@ public class Binance {
 			//test orders
 			NewOrder order = marketBuy(trade_pair, quantity);
 			client.newOrderTest(order);
+			System.out.println(order.getSymbol());
+			System.out.println(order.getStopPrice());
 			// insert balance is sufficient
 		}
 		else {
@@ -116,7 +118,7 @@ public class Binance {
 	public void buy_market_order(String trade_pair, String quantity) throws Exception {
 		Settings settings = new Settings();
 		 BinanceApiRestClient client = settings.client;
-		boolean test = false; //settings.binance_test_order;
+		boolean test = true; //settings.binance_test_order;
 		
 		if (test==true) {
 			//test orders
@@ -129,7 +131,13 @@ public class Binance {
 		    
 		    // amount > getminprice then proceed if not show min price error
 			NewOrder order = marketBuy(trade_pair, quantity);
+			try {
 			client.newOrderTest(order);
+			}catch (BinanceApiException e) {
+				System.out.println(e.getError().getMsg());
+			}
+			System.out.println(order.getSymbol());
+			System.out.println(order.getStopPrice());
 			// insert balance is sufficient
 		}
 		else {
@@ -180,41 +188,66 @@ public class Binance {
 		BinanceApiWebSocketClient client = Settings.websocket_client;
 		// double percentage = ((base_value / target_value) * 100) - base_value;
 		// boolean greater = false;
-		
-		client.onCandlestickEvent("ethbtc", CandlestickInterval.ONE_MINUTE, response-> {
-		if(response.getBarFinal()) {
-			System.out.println(response);
-			double close = Double.parseDouble(response.getClose()); 
-			if (greater) {
-				if (close > target_value) {
-					System.out.println("greater");
-					JsonObject data = new JsonObject();
-					data.addProperty("symbol", symbol);
-					data.addProperty("sender_psid", sender_psid);
-					data.addProperty("percentage", percentage);
-					data.addProperty("base_value", base_value);
-					data.addProperty("target_value", target_value);
-					try {
-						ProcessBuilder processBuilder = new ProcessBuilder();
-						if (processBuilder.environment().get("PORT") != null) {
-							Utils.raw_post_request(Settings.HEROKU_URL+"/custom", data.toString());
-						}else {
-							Utils.raw_post_request(Settings.LOCAL_URL+"/custom", data.toString());
-						}
+		client.onCandlestickEvent("ethbtc", CandlestickInterval.ONE_MINUTE, response -> {
+			System.out.println(response.getClose()+ response.getBarFinal());
+			
+			if (response.getBarFinal()) {
+				double last_price = Double.parseDouble(response.getClose());
+				if (greater == true) {
+					
+					if (last_price > target_value) {
+						JsonObject data = new JsonObject();
+						data.addProperty("symbol", symbol);
+						data.addProperty("sender_psid", sender_psid);
+						data.addProperty("percentage", percentage);
+						data.addProperty("base_value", base_value);
+						data.addProperty("target_value", target_value);
 						
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						System.out.println("ERERREREPR");
+						try {
+							Utils.raw_post_request(settings.LOCAL_URL+"/notification", data.toString());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						throw new CustomException();
+					}else if (last_price < target_value){
+						JsonObject data = new JsonObject();
+						data.addProperty("symbol", symbol);
+						data.addProperty("sender_psid", sender_psid);
+						data.addProperty("percentage", percentage);
+						data.addProperty("base_value", base_value);
+						data.addProperty("target_value", target_value);
+						
+						try {
+							Utils.raw_post_request(settings.LOCAL_URL+"/notification", data.toString());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						throw new CustomException();
 					}
 				}
-			}else {
-			 	if (close < target_value) {
-				  
-			 	}
 			}
-		  }
-		}
-		);
+		});
+	}
+	public JsonObject get_asset_balance(String symbol) throws Exception {
+		String coin = "";
+		if (symbol.endsWith("usdt") )
+			coin = symbol.replace("usdt", "");
+		else if (symbol.endsWith("btc") )
+			coin = symbol.replace("btc", "");
+		else if (symbol.endsWith("etc") )
+			coin = symbol.replace("etc", "");
+		else if (symbol.endsWith("bnb") )
+			coin = symbol.replace("bnb", "");
+		Settings settings = new Settings();
+		BinanceApiRestClient client =settings.client;
+		Account account = client.getAccount(6000000L, System.currentTimeMillis());
+		
+		AssetBalance assetBalance = account.getAssetBalance(coin.toUpperCase());
+		JsonObject data = new JsonObject();
+		data.addProperty("asset", assetBalance.getAsset());
+		data.addProperty("amount", assetBalance.getFree());
+		return data;
 	}
 }

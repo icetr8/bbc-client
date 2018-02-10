@@ -27,32 +27,80 @@ public class Replies {
 		this.coinsph = new Coinsph();
 		
 	}
-	public void buy_market_order_symbol(String base_crypto) throws Exception {
+	public void buy_market_order_amount(String symbol) throws Exception {
+		JsonElement reply = PredefinedResponse.BUY_MARKET_ORDER_AMOUNT;
+		JsonObject reply1 = new JsonObject();
+		
+		
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "buy_market_order_amount");
+		state.addProperty("market_order_pair", symbol);
+		update_state(state);
+		
+		JsonObject response = binance.get_asset_balance(symbol);
+		reply1.addProperty("text", "You have "+response.get("amount").getAsString()+response.get("asset").getAsString()+" Select a percentage above.");
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		this.messenger_send.callSendAPI(this.sender_psid, reply1);
+		
+		
+	}
+	public void buy_market_order_pair() throws Exception {
 		JsonObject reply = new JsonObject();
-		reply.addProperty("text", "Choose and Type Crypto symbol you want to trade with "+ base_crypto.toUpperCase());
-		messenger_send.callSendAPI(this.sender_psid, reply);
-	}
-	public void buy_market_order(String Symbol, String amount) {
-		// binance.buy
-	}
-	public void buy_market_order_base() throws Exception {
-		JsonElement reply = PredefinedResponse.BASE_CRYPTO;
+		reply.addProperty("text", "Enter a VALID Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
 		this.messenger_send.callSendAPI(this.sender_psid, reply);
 		
 		JsonObject state = new JsonObject();
-		state.addProperty("state", "buy_market_order_base");
+		state.addProperty("state", "buy_market_order_pair");
 		update_state(state);
 	}
 	
-	public void sell_market_order_symbol(String base_crypto) {
-		// save symbol
+	public void sell_market_order_amount(String symbol) throws Exception {
+		JsonElement reply = PredefinedResponse.SELL_MARKET_ORDER_AMOUNT;
+		JsonObject reply1 = new JsonObject();
+		
+		
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "sell_market_order_amount");
+		state.addProperty("market_order_pair", symbol);
+		update_state(state);
+		
+		JsonObject response = binance.get_asset_balance(symbol);
+		reply1.addProperty("text", "You have "+response.get("amount").getAsString()+response.get("asset").getAsString()+" Select a percentage above.");
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		this.messenger_send.callSendAPI(this.sender_psid, reply1);
+		
+		
 	}
-	
-	public void sell_market_order(String Symbol, String amount) {
-		// binance.sell
+	public void sell_market_order_pair() throws Exception {
+		JsonObject reply = new JsonObject();
+		reply.addProperty("text", "Enter a VALID Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "buy_market_order_pair");
+		update_state(state);
 	}
-	public void notification_proceed(String notification_type, String notification_interval, String target_value) {
-		System.out.println(target_value);
+	public void notification_proceed(String notification_type, String notification_interval,String notification_symbol, String notification_base_value, String notification_target_value) throws Exception {
+		double base_value = Double.parseDouble(notification_base_value);
+		double target_value = Double.parseDouble(notification_target_value);
+		double percentage = (100 - ((base_value / target_value) * 100.00)) / 100;
+		boolean greater = false;
+		if(percentage > 0) {
+			greater = true;
+		}
+		
+		binance.market_data_stream(this.sender_psid, notification_symbol, base_value, target_value, percentage, greater);
+		
+		JsonObject reply = new JsonObject();
+		String message = "";
+		if (greater == true) 
+			message = String.format("I will notify you when %s price hits greater than %s", notification_symbol, target_value);
+		else
+			message = String.format("I will notify you when %s price hits lower than %s", notification_symbol, target_value);
+		reply.addProperty("text", message);
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		reply.addProperty("text", "Meanwhile you can user other chat functions");
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
 	}
 	public void notification_target_value ( String symbol) throws Exception{
 		JsonObject response = binance.symbol_statistics(symbol.toUpperCase());
@@ -74,11 +122,14 @@ public class Replies {
 		
 		JsonObject state = new JsonObject();
 		state.addProperty("state", "notification_target_value");
+		state.addProperty("notification_symbol", symbol);
+		state.addProperty("notification_base_value", last_price);
 		update_state(state);
 	}
 	public void notification_trade_pair(String interval) throws Exception {
 		JsonObject state = new JsonObject();
 		state.addProperty("state", "notification_trade_pair");
+		state.addProperty("notification_interval", interval);
 		update_state(state);
 		
 		JsonObject reply = new JsonObject();
