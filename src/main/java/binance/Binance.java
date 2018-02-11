@@ -1,8 +1,13 @@
 package binance;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import com.binance.api.client.BinanceApiAsyncRestClient;
 import com.binance.api.client.BinanceApiRestClient;
@@ -31,6 +36,7 @@ import configuration.Settings;
 import utils.Utils;
 
 import static com.binance.api.client.domain.account.NewOrder.marketBuy;
+import static com.binance.api.client.domain.account.NewOrder.marketSell;
 import static com.binance.api.client.domain.account.NewOrder.limitBuy;
 
 public class Binance {
@@ -79,7 +85,6 @@ public class Binance {
 		double to_round = total_bitcoin * last_price;
 		double usdt_value = Math.round(to_round * 100.0) / 100.0;
 		
-		System.out.println(usdt_value);
 		NumberFormat formatter = new DecimalFormat("#0.00000000");     
 		String btc_value = formatter.format(total_bitcoin);
 		JsonObject data = new JsonObject();
@@ -92,65 +97,36 @@ public class Binance {
 	public void trade_history() throws Exception {
 		
 	}
-	public void sell_market_order(String trade_pair, String quantity ) throws Exception {
-		
+	public JsonObject market_order(String trade_pair, String quantity, String order_type) throws Exception {
 		Settings settings = new Settings();
-		 BinanceApiRestClient client = settings.client;
-		boolean test = false; //settings.binance_test_order;
-		
-		if (test==true) {
-			//test orders
-			NewOrder order = marketBuy(trade_pair, quantity);
-			client.newOrderTest(order);
-			System.out.println(order.getSymbol());
-			System.out.println(order.getStopPrice());
-			// insert balance is sufficient
+		BinanceApiRestClient client = settings.client;
+		JsonObject data = new JsonObject();
+		NewOrder order = null;
+		System.out.println(trade_pair +  quantity+order_type);
+		if (order_type =="buy") {
+			order = marketBuy(trade_pair.toUpperCase(), quantity);
+		}else if (order_type== "sell") {
+			order = marketSell(trade_pair.toUpperCase(), quantity);
 		}
-		else {
-			//real orders
-			ExchangeInfo exchangeInfo = client.getExchangeInfo();
-		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo(trade_pair);
-			SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.PRICE_FILTER);
-			System.out.println(priceFilter.getMinPrice());
-		    System.out.println(priceFilter.getTickSize());
-		}
-	}
-	public void buy_market_order(String trade_pair, String quantity) throws Exception {
-		Settings settings = new Settings();
-		 BinanceApiRestClient client = settings.client;
-		boolean test = true; //settings.binance_test_order;
-		
-		if (test==true) {
-			//test orders
+		try {
+			NewOrderResponse newOrderResponse = client.newOrder(order);
+			System.out.println(newOrderResponse);
 			
-			ExchangeInfo exchangeInfo = client.getExchangeInfo();
-		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo(trade_pair);
-			SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.PRICE_FILTER);
-			System.out.println(priceFilter.getMinPrice());
-		    System.out.println(priceFilter.getTickSize());
-		    
-		    // amount > getminprice then proceed if not show min price error
-			NewOrder order = marketBuy(trade_pair, quantity);
-			try {
-			client.newOrderTest(order);
-			}catch (BinanceApiException e) {
-				System.out.println(e.getError().getMsg());
-			}
-			System.out.println(order.getSymbol());
-			System.out.println(order.getStopPrice());
-			// insert balance is sufficient
-		}
-		else {
-			//real orders
-			ExchangeInfo exchangeInfo = client.getExchangeInfo();
-		    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo(trade_pair);
-			SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.PRICE_FILTER);
-			System.out.println(priceFilter.getMinPrice());
-		    System.out.println(priceFilter.getTickSize());
-		    
-		    // amount > getminprice then proceed if not show min price error
-		    
-		}
+			
+			Date date = new Date(newOrderResponse.getTransactTime()); 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+			sdf.setTimeZone(TimeZone.getTimeZone("GMT-8")); 
+			String formattedDate = sdf.format(date);
+			
+			data.addProperty("date", formattedDate);
+			data.addProperty("symbol", newOrderResponse.getSymbol());
+		} catch (BinanceApiException e) {
+	      System.out.println(e.getError().getMsg());
+	      data.addProperty("error", e.getError().getMsg());
+	    }
+		return data;
+	    
+	    // amount > getminprice then proceed if not show min price error
 	}
 	
 	public void user_data_stream() throws Exception {
@@ -188,8 +164,7 @@ public class Binance {
 		BinanceApiWebSocketClient client = Settings.websocket_client;
 		// double percentage = ((base_value / target_value) * 100) - base_value;
 		// boolean greater = false;
-		client.onCandlestickEvent("ethbtc", CandlestickInterval.ONE_MINUTE, response -> {
-			System.out.println(response.getClose()+ response.getBarFinal());
+		client.onCandlestickEvent(symbol, CandlestickInterval.ONE_MINUTE, response -> {
 			
 			if (response.getBarFinal()) {
 				double last_price = Double.parseDouble(response.getClose());
@@ -236,8 +211,8 @@ public class Binance {
 			coin = symbol.replace("usdt", "");
 		else if (symbol.endsWith("btc") )
 			coin = symbol.replace("btc", "");
-		else if (symbol.endsWith("etc") )
-			coin = symbol.replace("etc", "");
+		else if (symbol.endsWith("eth") )
+			coin = symbol.replace("eth", "");
 		else if (symbol.endsWith("bnb") )
 			coin = symbol.replace("bnb", "");
 		Settings settings = new Settings();
@@ -248,6 +223,69 @@ public class Binance {
 		JsonObject data = new JsonObject();
 		data.addProperty("asset", assetBalance.getAsset());
 		data.addProperty("amount", assetBalance.getFree());
+		
+		ExchangeInfo exchangeInfo = client.getExchangeInfo();
+	    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo(symbol.toUpperCase());
+		SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.LOT_SIZE);
+		data.addProperty("min_price", Double.parseDouble(priceFilter.getMinQty()));
+		
+		// get lot size format #.## #.###
+		String text = new BigDecimal(priceFilter.getMinQty()).stripTrailingZeros().toPlainString();
+		
+		int integerPlaces = text.indexOf('.');
+		int decimalPlaces = text.length() - integerPlaces - 1;
+		String format = "#";
+		for (int x=1; x <= decimalPlaces; x++) {
+			if (x==1)
+				format+=".";
+			format+="#";
+		}
+
+		data.addProperty("decimal_format", format);
+		return data;
+	}
+	
+	public JsonObject get_asset_base_balance(String symbol) throws Exception {
+		String coin = "";
+		if (symbol.endsWith("usdt") )
+			coin = "usdt";
+		else if (symbol.endsWith("btc") )
+			coin = "btc";
+		else if (symbol.endsWith("eth") )
+			coin = "eth";
+		else if (symbol.endsWith("bnb") )
+			coin = "bnb";
+		Settings settings = new Settings();
+		BinanceApiRestClient client =settings.client;
+		Account account = client.getAccount(6000000L, System.currentTimeMillis());
+		
+		AssetBalance assetBalance = account.getAssetBalance(coin.toUpperCase());
+		JsonObject data = new JsonObject();
+		data.addProperty("asset", coin);
+		data.addProperty("amount", assetBalance.getFree());
+		
+		ExchangeInfo exchangeInfo = client.getExchangeInfo();
+	    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo(symbol.toUpperCase());
+
+	    SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.MIN_NOTIONAL);
+	    System.out.println(priceFilter.getMinNotional());
+	    data.addProperty("min_price", Double.parseDouble(priceFilter.getMinQty()));
+		
+		// get lot size format #.## #.###
+		String text = new BigDecimal(priceFilter.getMinQty()).stripTrailingZeros().toPlainString();
+		int integerPlaces = text.indexOf('.');
+		int decimalPlaces = text.length() - integerPlaces - 1;
+		String format = "#";
+		for (int x=1; x <= decimalPlaces; x++) {
+			if (x==1)
+				format+=".";
+			format+="#";
+		}
+		System.out.println(format);
+		DecimalFormat df = new DecimalFormat(format);
+		df.setRoundingMode(RoundingMode.FLOOR);
+		//String num = df.format(0.57799);
+		data.addProperty("decimal_format", format);
 		return data;
 	}
 }

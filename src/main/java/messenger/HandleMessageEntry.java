@@ -89,7 +89,14 @@ public class HandleMessageEntry {
 			}else if (msg.equalsIgnoreCase("25")) {
 				replies.btc_to_php_send(0.25);
 			}
-		}else {
+		}else if (type.equalsIgnoreCase("binance_buy")) {
+			String symbol = get_state().get("messenger_market_order_pair").getAsString();
+			replies.buy_market_order_proceed(symbol, Double.parseDouble(msg));
+		}else if (type.equalsIgnoreCase("binance_sell")) {
+			String symbol = get_state().get("messenger_market_order_pair").getAsString();
+			replies.sell_market_order_proceed(symbol, Double.parseDouble(msg));
+		}
+		else {
 			MessengerSend messenger_send = new MessengerSend();
 			JsonObject reply = new JsonObject();
 			reply.addProperty("text", "Oops! Sorry previous transactions are expired");

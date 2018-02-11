@@ -1,7 +1,10 @@
 package messenger;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import javax.xml.ws.Response;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -27,20 +30,85 @@ public class Replies {
 		this.coinsph = new Coinsph();
 		
 	}
+	public void sell_market_order_proceed(String symbol, double percent) throws Exception {
+		JsonObject assetBalance = binance.get_asset_balance(symbol);
+		
+		// quantity lot size #.## or #.### or #.#### or #
+		DecimalFormat df = new DecimalFormat(assetBalance.get("decimal_format").getAsString());
+		df.setRoundingMode(RoundingMode.FLOOR);
+		double balance = Double.parseDouble(assetBalance.get("amount").getAsString());
+		String quantity = df.format(balance * (percent / 100.0));
+		
+		JsonObject response = binance.market_order(symbol, quantity, "sell");
+		JsonObject reply = new JsonObject();
+		if (response.get("error") != null) {
+			String error = response.get("error").getAsString();
+			if (percent == 100 && error.equalsIgnoreCase("Filter failure: LOT_SIZE")){
+				reply.addProperty("text", "You're total asset is not enough to sell. Please choose another trade pair");
+				this.messenger_send.callSendAPI(this.sender_psid, reply);
+				sell_market_order_pair();
+				return;
+			} else if (error.equalsIgnoreCase("Filter failure: LOT_SIZE")) {
+				reply.addProperty("text", "You're selected percentage is not enough to sell. Please choose a higher percentage");
+				this.messenger_send.callSendAPI(this.sender_psid, reply);
+				sell_market_order_amount(symbol);
+				return;
+			}
+		}
+		reply.addProperty("text", "Sell Success!!!");
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
+	}
+	public void buy_market_order_proceed(String symbol, double percent) throws Exception {
+		JsonObject assetBalance = binance.get_asset_base_balance(symbol);
+
+		// quantity lot size #.## or #.### or #.#### or #
+		DecimalFormat df = new DecimalFormat(assetBalance.get("decimal_format").getAsString());
+		df.setRoundingMode(RoundingMode.FLOOR);
+		double balance = Double.parseDouble(assetBalance.get("amount").getAsString());
+		String quantity = df.format(balance * (percent / 100.0));
+		System.out.println(balance);
+		JsonObject response = binance.market_order(symbol, quantity, "buy");
+		JsonObject reply = new JsonObject();
+		if (response.get("error") != null) {
+			String error = response.get("error").getAsString();
+			if (percent == 100 && error.equalsIgnoreCase("Filter failure: LOT_SIZE")){
+				reply.addProperty("text", "You're total asset is not enough to buy. Please choose another trade pair");
+				this.messenger_send.callSendAPI(this.sender_psid, reply);
+				sell_market_order_pair();
+			} else if (error.equalsIgnoreCase("Filter failure: LOT_SIZE")) {
+				reply.addProperty("text", "You're selected percentage is not enough to buy. Please choose a higher percentage");
+				this.messenger_send.callSendAPI(this.sender_psid, reply);
+				sell_market_order_amount(symbol);
+				return;
+			}
+		}
+		String infos = "/n/n" + response.get("date").getAsString() +"/n" + symbol.toUpperCase();
+		reply.addProperty("text", "Buy Success!!!" + infos);
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		
+	}
 	public void buy_market_order_amount(String symbol) throws Exception {
 		JsonElement reply = PredefinedResponse.BUY_MARKET_ORDER_AMOUNT;
 		JsonObject reply1 = new JsonObject();
 		
+		JsonObject assetBalance = binance.get_asset_base_balance(symbol);
+		double balance = assetBalance.get("amount").getAsDouble();
+		String asset = assetBalance.get("asset").getAsString();
+		if (balance <= 0) {
+			reply1.addProperty("text", asset + " balance is zero");
+			return;
+		}
+		String percentages = String.format("\n75%% %f, 50%% %f, 25%% %f", balance * (0.75), balance * (0.50), balance * (0.25));
+		reply1.addProperty("text", "You have "+assetBalance.get("amount").getAsString()+assetBalance.get("asset").getAsString()+" Select a percentage above." + percentages );
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		this.messenger_send.callSendAPI(this.sender_psid, reply1);
 		
+
 		JsonObject state = new JsonObject();
 		state.addProperty("state", "buy_market_order_amount");
 		state.addProperty("market_order_pair", symbol);
 		update_state(state);
-		
-		JsonObject response = binance.get_asset_balance(symbol);
-		reply1.addProperty("text", "You have "+response.get("amount").getAsString()+response.get("asset").getAsString()+" Select a percentage above.");
-		this.messenger_send.callSendAPI(this.sender_psid, reply);
-		this.messenger_send.callSendAPI(this.sender_psid, reply1);
+
 		
 		
 	}
@@ -58,17 +126,23 @@ public class Replies {
 		JsonElement reply = PredefinedResponse.SELL_MARKET_ORDER_AMOUNT;
 		JsonObject reply1 = new JsonObject();
 		
+		JsonObject assetBalance = binance.get_asset_balance(symbol);
+		double balance = assetBalance.get("amount").getAsDouble();
+		String asset = assetBalance.get("asset").getAsString();
+		if (balance <= 0) {
+			reply1.addProperty("text", asset + " balance is zero");
+			return;
+		}
+		
+		String percentages = String.format("\n75%% %f, 50%% %f, 25%% %f", balance * (0.75), balance * (0.50), balance * (0.25));
+		reply1.addProperty("text", "You have "+assetBalance.get("amount").getAsString()+assetBalance.get("asset").getAsString()+" Select a percentage above." + percentages );
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		this.messenger_send.callSendAPI(this.sender_psid, reply1);
 		
 		JsonObject state = new JsonObject();
 		state.addProperty("state", "sell_market_order_amount");
 		state.addProperty("market_order_pair", symbol);
 		update_state(state);
-		
-		JsonObject response = binance.get_asset_balance(symbol);
-		reply1.addProperty("text", "You have "+response.get("amount").getAsString()+response.get("asset").getAsString()+" Select a percentage above.");
-		this.messenger_send.callSendAPI(this.sender_psid, reply);
-		this.messenger_send.callSendAPI(this.sender_psid, reply1);
-		
 		
 	}
 	public void sell_market_order_pair() throws Exception {
@@ -77,7 +151,7 @@ public class Replies {
 		this.messenger_send.callSendAPI(this.sender_psid, reply);
 		
 		JsonObject state = new JsonObject();
-		state.addProperty("state", "buy_market_order_pair");
+		state.addProperty("state", "sell_market_order_pair");
 		update_state(state);
 	}
 	public void notification_proceed(String notification_type, String notification_interval,String notification_symbol, String notification_base_value, String notification_target_value) throws Exception {
@@ -89,7 +163,7 @@ public class Replies {
 			greater = true;
 		}
 		
-		binance.market_data_stream(this.sender_psid, notification_symbol, base_value, target_value, percentage, greater);
+		binance.market_data_stream(this.sender_psid, notification_symbol.toLowerCase(), base_value, target_value, percentage, greater);
 		
 		JsonObject reply = new JsonObject();
 		String message = "";
@@ -460,4 +534,5 @@ public class Replies {
 		}
 		
 	}
+	
 }
