@@ -32,6 +32,7 @@ public class Main {
 		//coinsph.seven_eleven();
 		//coinsph.payin_outlets();
 		Binance binance = new Binance();
+		binance.trade_history_str("BTCUSDT");
 		//binance.view_funds();
 		//binance.sell_market_order("BTCUSDT", "3000");
 		//binance.buy_market_order("BTCUSDT", "3000");

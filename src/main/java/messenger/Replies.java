@@ -218,6 +218,24 @@ public class Replies {
 		state.addProperty("notification_type", notification_type);
 		update_state(state);
 	}
+	public void trade_history_proceed(String symbol) throws Exception {
+		JsonObject response = this.binance.trade_history_str(symbol.toUpperCase());
+		JsonObject reply = new JsonObject();
+		if (response.get("error")!=null) {
+			reply.addProperty("text", response.get("error").getAsString());
+		}else
+			reply.addProperty("text", response.get("message").getAsString());
+		messenger_send.callSendAPI(this.sender_psid, reply);
+	}
+	public void trade_history_symbol() throws Exception {
+		JsonObject reply = new JsonObject();
+		reply.addProperty("text", "Enter a Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
+		messenger_send.callSendAPI(this.sender_psid, reply);
+		
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "trade_history_symbol");
+		update_state(state);
+	}
 	public void seven_eleven_enter() throws Exception {
 		JsonObject reply = new JsonObject();
 		reply.addProperty("text", "Enter your amount in PHP");

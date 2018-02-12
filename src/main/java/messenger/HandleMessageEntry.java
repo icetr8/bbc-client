@@ -51,7 +51,7 @@ public class HandleMessageEntry {
 			}else if(msg.equalsIgnoreCase("trade_with_a_cryptocurrency")) {
 				replies.main_menu_replies();
 			}else if(msg.equalsIgnoreCase("trade_history")) {
-				replies.main_menu_replies();
+				replies.trade_history_symbol();
 			}else if(msg.equalsIgnoreCase("buy")) {
 				replies.buy_market_order_pair();
 			}else if(msg.equalsIgnoreCase("sell")) {
@@ -185,6 +185,8 @@ public class HandleMessageEntry {
 						replies.buy_market_order_amount(text);
 					else if (state.equalsIgnoreCase("sell_market_order_pair"))
 						replies.sell_market_order_amount(text);
+					else if (state.equalsIgnoreCase("trade_history_symbol"))
+						replies.trade_history_proceed(text);
 					else if (state.equalsIgnoreCase("notification_target_value")) {
 						String notification_type = get_state().get("messenger_notification_type").getAsString();
 						String notification_interval = get_state().get("messenger_notification_interval").getAsString();

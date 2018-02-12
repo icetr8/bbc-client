@@ -17,6 +17,7 @@ import com.binance.api.client.domain.account.Account;
 import com.binance.api.client.domain.account.AssetBalance;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.NewOrderResponse;
+import com.binance.api.client.domain.account.Trade;
 import com.binance.api.client.domain.event.AccountUpdateEvent;
 import com.binance.api.client.domain.event.AggTradeEvent;
 import com.binance.api.client.domain.event.OrderTradeUpdateEvent;
@@ -25,6 +26,7 @@ import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.SymbolFilter;
 import com.binance.api.client.domain.general.SymbolInfo;
 import com.binance.api.client.domain.general.FilterType;
+import com.binance.api.client.domain.market.AggTrade;
 import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.OrderBookEntry;
@@ -94,8 +96,31 @@ public class Binance {
 		return data;
 	}
 	
-	public void trade_history() throws Exception {
+	public JsonObject trade_history_str(String symbol) throws Exception {
+		Settings settings = new Settings();
+		BinanceApiRestClient client = settings.client;
+		String output = "Trade History for " + symbol+ "\n";
+		JsonObject data = new JsonObject();
 		
+		try {
+			List<Trade> myTrades = client.getMyTrades(symbol);
+			
+			for(Trade trade : myTrades) {
+				if (trade.isBuyer()) {
+					output+="BUY ";
+				}else if (trade.isMaker()) {
+					output+="Sell ";
+				}else 
+					output+="Sell ";
+				output += trade.getQty() +  " at "+ trade.getPrice();
+				output+="\n";
+			}
+		}catch(BinanceApiException e) {
+			System.out.println(e.getError().getMsg());
+		    data.addProperty("error", e.getError().getMsg());
+		}
+		data.addProperty("message", output);
+		return data;
 	}
 	public JsonObject market_order(String trade_pair, String quantity, String order_type) throws Exception {
 		Settings settings = new Settings();
