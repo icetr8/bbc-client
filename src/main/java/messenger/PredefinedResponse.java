@@ -1033,8 +1033,8 @@ public class PredefinedResponse {
     "payload": {
       "template_type": "generic",
       "elements": [{
-          "title": "Enter a Trading pair",
-          "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
+          "title": "Enter VALID a Trading pair",
+          "image_url":"https://coinsbot-client.herokuapp.com/images/cryptos.jpg",    
           "buttons": [ {
               "type":"web_url",
     "url":"https://angelosuinan.ddns.net/symbols",
@@ -1054,8 +1054,8 @@ public class PredefinedResponse {
 			"    \"payload\": {\n" + 
 			"      \"template_type\": \"generic\",\n" + 
 			"      \"elements\": [{\n" + 
-			"          \"title\": \"Enter a Trading pair\",\n" + 
-			"          \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png\",    \n" + 
+			"          \"title\": \"Enter VALID a Trading pair\",\n" + 
+			"          \"image_url\":\"https://coinsbot-client.herokuapp.com/images/cryptos.jpg\",    \n" + 
 			"          \"buttons\": [ {\n" + 
 			"              \"type\":\"web_url\",\n" + 
 			"    \"url\":\"https://angelosuinan.ddns.net/symbols\",\n" + 

@@ -154,9 +154,7 @@ public class Replies {
 		
 	}
 	public void buy_market_order_pair() throws Exception {
-		JsonObject reply = new JsonObject();
-		reply.addProperty("text", "Enter a VALID Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
-		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		JsonElement reply = this.predefined.PAIRS;
 		
 		JsonObject state = new JsonObject();
 		state.addProperty("state", "buy_market_order_pair");
@@ -187,9 +185,7 @@ public class Replies {
 		
 	}
 	public void sell_market_order_pair() throws Exception {
-		JsonObject reply = new JsonObject();
-		reply.addProperty("text", "Enter a VALID Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
-		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		JsonElement reply = this.predefined.PAIRS;
 		
 		JsonObject state = new JsonObject();
 		state.addProperty("state", "sell_market_order_pair");
@@ -247,8 +243,7 @@ public class Replies {
 		state.addProperty("notification_interval", interval);
 		update_state(state);
 		
-		JsonObject reply = new JsonObject();
-		reply.addProperty("text", "Enter a Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
+		JsonElement reply = this.predefined.PAIRS;
 		messenger_send.callSendAPI(this.sender_psid, reply);
 	}
 	public void notification_type(String notification_type) throws Exception {
@@ -270,8 +265,6 @@ public class Replies {
 	}
 	public void trade_history_symbol() throws Exception {
 		JsonElement reply = this.predefined.PAIRS;
-		//JsonObject reply = new JsonObject();
-		//reply.addProperty("text", "Enter a Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
 		messenger_send.callSendAPI(this.sender_psid, reply);
 		
 		JsonObject state = new JsonObject();
