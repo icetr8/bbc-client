@@ -39,7 +39,7 @@ public class MessengerSend {
 
 		CloseableHttpResponse response = client.execute(httpPost);
 		String responseAsString = EntityUtils.toString(response.getEntity());
-		//System.out.println(responseAsString);
+		System.out.println(responseAsString);
 		System.out.println(response.getStatusLine() + "  in SENDING in messenger");
 		client.close();
 	}

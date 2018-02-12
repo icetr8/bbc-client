@@ -1025,6 +1025,51 @@ public class PredefinedResponse {
 			"	  }\n" + 
 			"	}";
 	public static final JsonElement SELL_MARKET_ORDER_AMOUNT= new JsonParser().parse(sell_market_order_amount);
+	
+	/*
+	  {
+  "attachment": {
+    "type": "template",
+    "payload": {
+      "template_type": "generic",
+      "elements": [{
+          "title": "Enter a Trading pair",
+          "image_url":"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png",    
+          "buttons": [ {
+              "type":"web_url",
+    "url":"https://angelosuinan.ddns.net/symbols",
+    "title":"View Trade Pair list",
+    "webview_height_ratio": "tall",
+    "messenger_extensions": true
+          }]
+        }
+        ]
+      }
+	  }
+	}
+	 */
+	public static String pairs = " {\n" + 
+			"  \"attachment\": {\n" + 
+			"    \"type\": \"template\",\n" + 
+			"    \"payload\": {\n" + 
+			"      \"template_type\": \"generic\",\n" + 
+			"      \"elements\": [{\n" + 
+			"          \"title\": \"Enter a Trading pair\",\n" + 
+			"          \"image_url\":\"https://coinsbot-client.herokuapp.com/images/coins_ph_cover.png\",    \n" + 
+			"          \"buttons\": [ {\n" + 
+			"              \"type\":\"web_url\",\n" + 
+			"    \"url\":\"https://angelosuinan.ddns.net/symbols\",\n" + 
+			"    \"title\":\"View Trade Pairs list\",\n" + 
+			"    \"webview_height_ratio\": \"tall\",\n" + 
+			"    \"messenger_extensions\": true\n" + 
+			"          }]\n" + 
+			"        }\n" + 
+			"        ]\n" + 
+			"      }\n" + 
+			"	  }\n" + 
+			"	}";
+	public static final JsonElement PAIRS= new JsonParser().parse(pairs);
+
 }
 
 

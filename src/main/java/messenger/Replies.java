@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import Cryptocompare.cryptocompare;
 import binance.Binance;
 import coinsph.Coinsph;
 import configuration.Settings;
@@ -28,6 +29,38 @@ public class Replies {
 		this.predefined = new PredefinedResponse();
 		this.binance = new Binance();
 		this.coinsph = new Coinsph();
+		
+	}
+	public void request_symbol() throws Exception {
+		JsonObject reply = new JsonObject();
+		reply.addProperty("text", "Enter a symbol for a cryptocurrency");
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "request_symbol");
+		update_state(state);
+	}
+	public void symbol_info(String symbol) throws Exception {
+		JsonObject resp = cryptocompare.ticker(symbol);
+		JsonObject reply = new JsonObject();
+		if(resp.get("error") != null) {
+			reply.addProperty("text", resp.get("error").getAsString());
+			this.messenger_send.callSendAPI(this.sender_psid, reply);
+			return;
+		}
+		String message = "";
+		message+="Name: "+resp.get("name").getAsString() + "\n";
+		message+="rank: "+resp.get("rank").getAsString() + "\n";
+		message+="price_usd: "+resp.get("price_usd").getAsString() + "\n";
+		message+="24h_volume_usd: "+resp.get("24h_volume_usd").getAsString() + "\n";
+		message+="market_cap_usd: "+resp.get("market_cap_usd").getAsString() + "\n";
+		message+="available_supply: "+resp.get("available_supply").getAsString() + "\n";
+		message+="total_supply: "+resp.get("total_supply").getAsString() + "\n";
+		message+="max_supply: "+resp.get("max_supply").getAsString() + "\n";
+		message+="percent_change_1h: "+resp.get("percent_change_1h").getAsString() + "\n";
+		message+="percent_change_24h: "+resp.get("percent_change_24h").getAsString() + "\n";
+		reply.addProperty("text", message);
+		this.messenger_send.callSendAPI(this.sender_psid, reply);
 		
 	}
 	public void sell_market_order_proceed(String symbol, double percent) throws Exception {
@@ -58,6 +91,10 @@ public class Replies {
 		String infos = "\n\n" + response.get("date").getAsString() +"\n" + symbol.toUpperCase();
 		reply.addProperty("text", "Sell Success!!!" + infos);
 		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "sell_market_order_proceed");
+		update_state(state);
 	}
 	public void buy_market_order_proceed(String symbol, double percent) throws Exception {
 		JsonObject assetBaseBalance = binance.get_asset_base_balance(symbol);
@@ -86,6 +123,10 @@ public class Replies {
 		String infos = "\n\n" + response.get("date").getAsString() +"\n" + symbol.toUpperCase();
 		reply.addProperty("text", "Buy Success!!!" + infos);
 		this.messenger_send.callSendAPI(this.sender_psid, reply);
+		
+		JsonObject state = new JsonObject();
+		state.addProperty("state", "buy_market_order_proceed");
+		update_state(state);
 	}
 	public void buy_market_order_amount(String symbol) throws Exception {
 		JsonElement reply = PredefinedResponse.BUY_MARKET_ORDER_AMOUNT;
@@ -228,8 +269,9 @@ public class Replies {
 		messenger_send.callSendAPI(this.sender_psid, reply);
 	}
 	public void trade_history_symbol() throws Exception {
-		JsonObject reply = new JsonObject();
-		reply.addProperty("text", "Enter a Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
+		JsonElement reply = this.predefined.PAIRS;
+		//JsonObject reply = new JsonObject();
+		//reply.addProperty("text", "Enter a Trade Pair. You may view supported trade pair in this link http://coinsbot-client.herokuapp.com/trade_pairs");
 		messenger_send.callSendAPI(this.sender_psid, reply);
 		
 		JsonObject state = new JsonObject();
