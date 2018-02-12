@@ -263,29 +263,17 @@ public class Binance {
 		JsonObject data = new JsonObject();
 		data.addProperty("asset", coin);
 		data.addProperty("amount", assetBalance.getFree());
+	    
+	    TickerStatistics tickerStatistics = client.get24HrPriceStatistics(symbol.toUpperCase());
+		data.addProperty("last_price", tickerStatistics.getLastPrice());
 		
-		ExchangeInfo exchangeInfo = client.getExchangeInfo();
-	    SymbolInfo symbolInfo = exchangeInfo.getSymbolInfo(symbol.toUpperCase());
-
-	    SymbolFilter priceFilter = symbolInfo.getSymbolFilter(FilterType.MIN_NOTIONAL);
-	    System.out.println(priceFilter.getMinNotional());
-	    data.addProperty("min_price", Double.parseDouble(priceFilter.getMinQty()));
+		double balance = Double.parseDouble(assetBalance.getFree());
+		double last_price = Double.parseDouble(tickerStatistics.getLastPrice());
 		
-		// get lot size format #.## #.###
-		String text = new BigDecimal(priceFilter.getMinQty()).stripTrailingZeros().toPlainString();
-		int integerPlaces = text.indexOf('.');
-		int decimalPlaces = text.length() - integerPlaces - 1;
-		String format = "#";
-		for (int x=1; x <= decimalPlaces; x++) {
-			if (x==1)
-				format+=".";
-			format+="#";
-		}
-		System.out.println(format);
-		DecimalFormat df = new DecimalFormat(format);
-		df.setRoundingMode(RoundingMode.FLOOR);
-		//String num = df.format(0.57799);
-		data.addProperty("decimal_format", format);
+		double converted_amount = balance / last_price;
+		data.addProperty("converted_amount", converted_amount);
 		return data;
+		
+		
 	}
 }

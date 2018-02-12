@@ -55,18 +55,19 @@ public class Replies {
 				return;
 			}
 		}
-		reply.addProperty("text", "Sell Success!!!");
+		String infos = "\n\n" + response.get("date").getAsString() +"\n" + symbol.toUpperCase();
+		reply.addProperty("text", "Sell Success!!!" + infos);
 		this.messenger_send.callSendAPI(this.sender_psid, reply);
 	}
 	public void buy_market_order_proceed(String symbol, double percent) throws Exception {
-		JsonObject assetBalance = binance.get_asset_base_balance(symbol);
-
-		// quantity lot size #.## or #.### or #.#### or #
+		JsonObject assetBaseBalance = binance.get_asset_base_balance(symbol);
+		JsonObject assetBalance = binance.get_asset_balance(symbol);
 		DecimalFormat df = new DecimalFormat(assetBalance.get("decimal_format").getAsString());
 		df.setRoundingMode(RoundingMode.FLOOR);
-		double balance = Double.parseDouble(assetBalance.get("amount").getAsString());
-		String quantity = df.format(balance * (percent / 100.0));
-		System.out.println(balance);
+		
+		double converted_amount = Double.parseDouble(assetBaseBalance.get("converted_amount").getAsString());
+		String quantity = df.format(converted_amount * (percent/100.0));
+
 		JsonObject response = binance.market_order(symbol, quantity, "buy");
 		JsonObject reply = new JsonObject();
 		if (response.get("error") != null) {
@@ -82,10 +83,9 @@ public class Replies {
 				return;
 			}
 		}
-		String infos = "/n/n" + response.get("date").getAsString() +"/n" + symbol.toUpperCase();
+		String infos = "\n\n" + response.get("date").getAsString() +"\n" + symbol.toUpperCase();
 		reply.addProperty("text", "Buy Success!!!" + infos);
 		this.messenger_send.callSendAPI(this.sender_psid, reply);
-		
 	}
 	public void buy_market_order_amount(String symbol) throws Exception {
 		JsonElement reply = PredefinedResponse.BUY_MARKET_ORDER_AMOUNT;
